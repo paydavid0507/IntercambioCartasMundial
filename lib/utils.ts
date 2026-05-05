@@ -66,18 +66,39 @@ export function parseQuickPaste(input: string): QuickPasteResult {
     const line = raw.trim();
     if (!line) continue;
 
-    // Batch format: MEX: 1,2,3,4,5
-    const batchMatch = line.match(/^([A-Za-z]{2,4})\s*:\s*([\d,\s]+)$/);
+    // Batch format: MEX: 1,2,3  or range  MEX: 1-20
+    const batchMatch = line.match(/^([A-Za-z]{2,4})\s*:\s*(.+)$/);
     if (batchMatch) {
       const abbrRaw = batchMatch[1].toUpperCase();
       if (!isAllowedAbbr(abbrRaw)) {
         errors.push({ line, reason: `abreviación inválida (${abbrRaw})` });
         continue;
       }
-      const nums = batchMatch[2].split(",").map((s) => s.trim()).filter(Boolean);
+      const content = batchMatch[2].trim();
+      const min = cardNumberMin(abbrRaw);
+
+      // Range format: MEX: 1-20
+      const rangeMatch = content.match(/^(\d{1,2})-(\d{1,2})$/);
+      if (rangeMatch) {
+        const start = parseInt(rangeMatch[1], 10);
+        const end = parseInt(rangeMatch[2], 10);
+        if (start > end) {
+          errors.push({ line, reason: `rango invertido — debe ser de menor a mayor (ej: ${abbrRaw}: ${end}-${start})` });
+        } else if (start < min || end > CARD_NUMBER_MAX) {
+          errors.push({ line, reason: `rango fuera de límite válido (${min}-${CARD_NUMBER_MAX})` });
+        } else {
+          for (let n = start; n <= end; n++) {
+            entries.push({ abbr: abbrRaw, number: n, quantity: 1 });
+          }
+        }
+        continue;
+      }
+
+      // Comma-separated format: MEX: 1,2,3
+      const nums = content.split(",").map((s) => s.trim()).filter(Boolean);
       for (const ns of nums) {
         const num = parseInt(ns, 10);
-        if (isNaN(num) || num < cardNumberMin(abbrRaw) || num > CARD_NUMBER_MAX) {
+        if (isNaN(num) || num < min || num > CARD_NUMBER_MAX) {
           errors.push({ line: `${abbrRaw}: ${ns}`, reason: `número fuera de rango (${ns})` });
         } else {
           entries.push({ abbr: abbrRaw, number: num, quantity: 1 });
