@@ -38,6 +38,10 @@ export function ExchangeActions({
       if (res.ok) {
         setSent(true);
         setBody("");
+        setTimeout(() => {
+          setShowForm(false);
+          setSent(false);
+        }, 2000);
       } else {
         setError(res.error ?? "Error al enviar.");
       }
