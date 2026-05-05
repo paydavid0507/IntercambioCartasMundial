@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { mapAuthError } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
@@ -20,7 +21,7 @@ async function sendRecoveryEmail(formData: FormData) {
     redirectTo: `${origin}/auth/callback?next=/profile`,
   });
   if (error) {
-    return redirect("/recover?error=" + encodeURIComponent(error.message));
+    return redirect("/recover?error=" + encodeURIComponent(mapAuthError(error.message)));
   }
   redirect(
     "/login?message=" +

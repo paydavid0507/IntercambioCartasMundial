@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import { slugify } from "@/lib/utils";
+import { slugify, mapAuthError } from "@/lib/utils";
 
 async function signUp(formData: FormData) {
   "use server";
@@ -44,7 +44,7 @@ async function signUp(formData: FormData) {
   });
 
   if (error) {
-    return redirect("/register?error=" + encodeURIComponent(error.message));
+    return redirect("/register?error=" + encodeURIComponent(mapAuthError(error.message)));
   }
 
   // If a session is returned (email confirmation off), update the auto-created
@@ -63,7 +63,7 @@ async function signUp(formData: FormData) {
   redirect(
     "/login?message=" +
       encodeURIComponent(
-        "Te enviamos un correo para confirmar tu cuenta. Revisa tu bandeja.",
+        "¡Cuenta creada! Revisa tu correo (incluyendo la carpeta de spam) y haz clic en el enlace de confirmación.",
       ),
   );
 }
@@ -134,7 +134,11 @@ export default async function RegisterPage({
           </Button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-slate-500">
+        <p className="mt-4 rounded-md bg-slate-50 border border-slate-200 px-3 py-2 text-xs text-slate-500">
+          Al registrarte recibirás un correo de confirmación. Si no llega en unos minutos, revisa la carpeta de spam.
+        </p>
+
+        <p className="mt-3 text-center text-sm text-slate-500">
           ¿Ya tienes cuenta?{" "}
           <Link href="/login" className="text-brand-700 hover:underline">
             Inicia sesión

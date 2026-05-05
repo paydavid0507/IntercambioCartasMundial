@@ -11,6 +11,25 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function mapAuthError(message: string): string {
+  const m = message.toLowerCase();
+  if (m.includes("rate limit") || m.includes("over_email_send_rate_limit") || m.includes("too many requests") || m.includes("once every"))
+    return "Demasiados intentos en poco tiempo. Espera unos minutos e inténtalo de nuevo.";
+  if (m.includes("user already registered") || m.includes("already been registered") || m.includes("already registered"))
+    return "Este correo ya tiene una cuenta. Inicia sesión o usa '¿Olvidaste tu contraseña?'.";
+  if (m.includes("invalid") && m.includes("email"))
+    return "El formato del correo no es válido.";
+  if (m.includes("password") && (m.includes("6") || m.includes("length") || m.includes("weak")))
+    return "La contraseña debe tener al menos 6 caracteres.";
+  if (m.includes("signup") && m.includes("disabled"))
+    return "El registro está temporalmente deshabilitado.";
+  if (m.includes("email not confirmed"))
+    return "Revisa tu correo y confirma tu cuenta antes de iniciar sesión.";
+  if (m.includes("invalid login") || m.includes("invalid credentials"))
+    return "Correo o contraseña incorrectos.";
+  return "Ocurrió un error inesperado. Intenta de nuevo en unos minutos.";
+}
+
 export function slugify(input: string): string {
   return input
     .toLowerCase()
