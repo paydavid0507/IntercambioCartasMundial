@@ -32,15 +32,15 @@ export function QuickPaste({ kind }: { kind: CardKind }) {
       <div className="space-y-1.5">
         <Label htmlFor={`paste-${kind}`}>Entrada rápida</Label>
         <p className="text-xs text-slate-500">
-          Una carta por línea. Ejemplo: <code>MEX-01 x2</code>,{" "}
-          <code>BRA 10 1</code>, <code>ARG-05</code>.
+          Por equipo: <code>MEX: 1,2,3,4,5</code>. También carta por línea:{" "}
+          <code>MEX-01 x2</code>, <code>ARG-05</code>.
         </p>
         <textarea
           id={`paste-${kind}`}
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={5}
-          placeholder={"MEX-01 x2\nARG-05\nBRA 10 3"}
+          placeholder={"MEX: 1,2,3,4,5,6,7\nBRA: 3,8,15\nARG-05 x2"}
           className="w-full rounded-md border border-slate-300 bg-white p-2 text-sm font-mono focus-visible:border-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
         />
       </div>

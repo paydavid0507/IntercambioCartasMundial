@@ -33,11 +33,10 @@ export type QuickPasteResult = {
 };
 
 /**
- * Parses input like:
- *   MEX-01 x2
- *   BRA 10 1
- *   ARG-05
- * Each line yields one entry. Lines that can't be parsed go into errors.
+ * Parses input in two formats:
+ *   Batch:  MEX: 1,2,3,4,5   (one team, multiple numbers separated by commas)
+ *   Single: MEX-01 x2 | BRA 10 1 | ARG-05
+ * Each number in a batch line becomes one entry with quantity 1.
  */
 export function parseQuickPaste(input: string): QuickPasteResult {
   const entries: ParsedCardEntry[] = [];
@@ -48,12 +47,27 @@ export function parseQuickPaste(input: string): QuickPasteResult {
     const line = raw.trim();
     if (!line) continue;
 
-    // Patterns supported:
-    //   ABC-NN xK
-    //   ABC NN xK
-    //   ABC-NN K
-    //   ABC NN K
-    //   ABC-NN
+    // Batch format: MEX: 1,2,3,4,5
+    const batchMatch = line.match(/^([A-Za-z]{2,4})\s*:\s*([\d,\s]+)$/);
+    if (batchMatch) {
+      const abbrRaw = batchMatch[1].toUpperCase();
+      if (!isAllowedAbbr(abbrRaw)) {
+        errors.push({ line, reason: `abreviación inválida (${abbrRaw})` });
+        continue;
+      }
+      const nums = batchMatch[2].split(",").map((s) => s.trim()).filter(Boolean);
+      for (const ns of nums) {
+        const num = parseInt(ns, 10);
+        if (isNaN(num) || num < CARD_NUMBER_MIN || num > CARD_NUMBER_MAX) {
+          errors.push({ line: `${abbrRaw}: ${ns}`, reason: `número fuera de rango (${ns})` });
+        } else {
+          entries.push({ abbr: abbrRaw, number: num, quantity: 1 });
+        }
+      }
+      continue;
+    }
+
+    // Single-card format: ABC-NN xK | ABC NN K | ABC-NN
     const match = line.match(
       /^([A-Za-z]{2,4})[\s-]+(\d{1,2})(?:\s*[xX]?\s*(\d{1,3}))?$/,
     );
