@@ -44,3 +44,21 @@ export async function markAsRead(
   revalidatePath("/inbox");
   return { ok: true };
 }
+
+export async function clearBox(
+  box: "inbox" | "outbox",
+): Promise<{ ok: boolean; error?: string }> {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "No autenticado" };
+
+  const filter = box === "inbox" ? "recipient_id" : "sender_id";
+  const { error } = await supabase
+    .from("messages")
+    .delete()
+    .eq(filter, user.id);
+
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/inbox");
+  return { ok: true };
+}
