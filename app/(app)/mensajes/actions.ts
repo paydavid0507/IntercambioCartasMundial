@@ -23,7 +23,7 @@ export async function sendMessage(
   });
 
   if (error) return { ok: false, error: "No se pudo enviar el mensaje." };
-  revalidatePath("/inbox");
+  revalidatePath("/mensajes");
   return { ok: true };
 }
 
@@ -41,7 +41,7 @@ export async function markAsRead(
     .eq("recipient_id", user.id)
     .is("read_at", null);
 
-  revalidatePath("/inbox");
+  revalidatePath("/mensajes");
   return { ok: true };
 }
 
@@ -59,6 +59,6 @@ export async function clearBox(
     .eq(filter, user.id);
 
   if (error) return { ok: false, error: error.message };
-  revalidatePath("/inbox");
+  revalidatePath("/mensajes");
   return { ok: true };
 }

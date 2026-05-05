@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Send } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { sendMessage } from "@/app/(app)/inbox/actions";
+import { sendMessage } from "@/app/(app)/mensajes/actions";
 
 export function MessageForm({
   recipientId,

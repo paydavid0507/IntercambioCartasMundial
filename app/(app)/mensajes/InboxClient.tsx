@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ChevronsDownUp, ChevronsUpDown, Trash2, ChevronDown, ChevronUp, Inbox, Send } from "lucide-react";
 import { clearBox, markAsRead } from "./actions";
 import type { Message } from "./page";
@@ -31,6 +32,7 @@ export function InboxClient({
   );
   const [confirmClear, setConfirmClear] = React.useState(false);
   const [clearing, startClearTransition] = React.useTransition();
+  const router = useRouter();
 
   const messages = tab === "inbox"
     ? inbox.map((m) => ({ ...m, read_at: readSet.has(m.id) ? (m.read_at ?? "read") : null }))
@@ -75,6 +77,7 @@ export function InboxClient({
       await clearBox(tab);
       setConfirmClear(false);
       setExpanded(new Set());
+      router.refresh();
     });
   }
 

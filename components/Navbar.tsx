@@ -6,7 +6,7 @@ const links = [
   { href: "/album", label: "Mi álbum" },
   { href: "/compare", label: "Intercambios" },
   { href: "/search", label: "Buscar" },
-  { href: "/inbox", label: "Mensajes" },
+  { href: "/mensajes", label: "Mensajes" },
   { href: "/profile", label: "Perfil" },
 ];
 
@@ -35,7 +35,7 @@ export function Navbar({
               className="relative rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
             >
               {l.label}
-              {l.href === "/inbox" && unreadMessages > 0 && (
+              {l.href === "/mensajes" && unreadMessages > 0 && (
                 <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">
                   {unreadMessages > 9 ? "9+" : unreadMessages}
                 </span>
@@ -63,7 +63,7 @@ export function Navbar({
             className="relative rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap"
           >
             {l.label}
-            {l.href === "/inbox" && unreadMessages > 0 && (
+            {l.href === "/mensajes" && unreadMessages > 0 && (
               <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">
                 {unreadMessages > 9 ? "9+" : unreadMessages}
               </span>

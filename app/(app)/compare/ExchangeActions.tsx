@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { User, MessageCircle, Send, X } from "lucide-react";
-import { sendMessage } from "@/app/(app)/inbox/actions";
+import { sendMessage } from "@/app/(app)/mensajes/actions";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
