@@ -17,7 +17,7 @@ async function signIn(formData: FormData) {
   const supabase = createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) {
-    return redirect("/login?error=" + encodeURIComponent(error.message));
+    return redirect("/login?error=" + encodeURIComponent("Correo o contraseña incorrectos"));
   }
   redirect("/album");
 }

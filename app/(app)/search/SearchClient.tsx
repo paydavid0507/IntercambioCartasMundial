@@ -51,8 +51,8 @@ export function SearchClient({ currentUserId }: { currentUserId: string }) {
       const tokens = tokenizeSearch(debounced);
 
       // 1) Profile search by name / city / country.
-      // Strip characters that have special meaning in PostgREST .or() syntax.
-      const safe = debounced.replace(/[(),:*]/g, " ").trim();
+      // Strip characters with special meaning in PostgREST .or() syntax and LIKE wildcards.
+      const safe = debounced.replace(/[(),:*%_\\]/g, " ").trim();
       const profileQuery = supabase
         .from("profiles")
         .select("id, display_name, city, country, share_slug")
