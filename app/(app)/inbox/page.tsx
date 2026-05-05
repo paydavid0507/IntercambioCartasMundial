@@ -19,25 +19,32 @@ export default async function InboxPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: raw } = await supabase
+  const { data: rawMessages } = await supabase
     .from("messages")
-    .select("id, sender_id, body, read_at, created_at, profiles!messages_sender_id_fkey(display_name, share_slug)")
+    .select("id, sender_id, body, read_at, created_at")
     .eq("recipient_id", user.id)
     .order("created_at", { ascending: false })
     .limit(100);
 
-  const messages: Message[] = ((raw ?? []) as unknown as Array<{
-    id: string;
-    sender_id: string;
-    body: string;
-    read_at: string | null;
-    created_at: string;
-    profiles: { display_name: string; share_slug: string } | null;
-  }>).map((r) => ({
+  const msgs = rawMessages ?? [];
+  const senderIds = [...new Set(msgs.map((m) => m.sender_id))];
+
+  const profileMap = new Map<string, { display_name: string; share_slug: string }>();
+  if (senderIds.length > 0) {
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("id, display_name, share_slug")
+      .in("id", senderIds);
+    for (const p of profiles ?? []) {
+      profileMap.set(p.id, { display_name: p.display_name, share_slug: p.share_slug });
+    }
+  }
+
+  const messages: Message[] = msgs.map((r) => ({
     id: r.id,
     sender_id: r.sender_id,
-    sender_name: r.profiles?.display_name ?? "Usuario",
-    sender_slug: r.profiles?.share_slug ?? "",
+    sender_name: profileMap.get(r.sender_id)?.display_name ?? "Usuario",
+    sender_slug: profileMap.get(r.sender_id)?.share_slug ?? "",
     body: r.body,
     read_at: r.read_at,
     created_at: r.created_at,
