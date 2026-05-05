@@ -265,26 +265,48 @@ function ExchangeColumn({
   cards: Direct[];
   empty: string;
 }) {
+  // Group by team
+  const groups = new Map<string, Direct[]>();
+  for (const c of [...cards].sort((a, b) => a.card_code.localeCompare(b.card_code))) {
+    const list = groups.get(c.team_abbr) ?? [];
+    list.push(c);
+    groups.set(c.team_abbr, list);
+  }
+  const teamEntries = Array.from(groups.entries()).sort(([a], [b]) => a.localeCompare(b));
+
   return (
     <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
-      <h3 className="text-sm font-semibold">{title}</h3>
+      <h3 className="mb-2 text-sm font-semibold">{title}</h3>
       {cards.length === 0 ? (
-        <p className="mt-2 text-sm text-slate-500">{empty}</p>
+        <p className="text-sm text-slate-500">{empty}</p>
       ) : (
-        <ul className="mt-2 space-y-1 text-sm">
-          {cards
-            .slice()
-            .sort((a, b) => a.card_code.localeCompare(b.card_code))
-            .map((c) => (
-              <li
-                key={c.card_code + c.owner_user_id}
-                className="flex items-center justify-between"
-              >
-                <span className="font-mono">{c.card_code}</span>
-                <span className="text-slate-600">x{c.possible_quantity}</span>
-              </li>
-            ))}
-        </ul>
+        <div className="space-y-2">
+          {teamEntries.map(([team, teamCards]) => (
+            <div key={team}>
+              <p className="mb-1 font-mono text-xs font-semibold text-slate-500">
+                {team}
+                <span className="ml-1 font-normal text-slate-400">
+                  · {teamCards.length}
+                </span>
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {teamCards.map((c) => (
+                  <span
+                    key={c.card_code}
+                    className="rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-xs text-slate-700"
+                  >
+                    {String(c.card_number).padStart(2, "0")}
+                    {c.possible_quantity > 1 && (
+                      <span className="ml-0.5 text-slate-400">
+                        ×{c.possible_quantity}
+                      </span>
+                    )}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
