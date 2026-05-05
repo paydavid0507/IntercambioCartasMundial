@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
+import { MessageForm } from "./MessageForm";
 
 type Params = { slug: string };
 
@@ -40,6 +41,8 @@ export default async function PublicProfilePage({
   params: Params;
 }) {
   const supabase = createClient();
+  const { data: { user: viewer } } = await supabase.auth.getUser();
+
   const { data: profile } = await supabase
     .from("profiles")
     .select("*")
@@ -47,6 +50,8 @@ export default async function PublicProfilePage({
     .maybeSingle();
 
   if (!profile) notFound();
+
+  const isOwnProfile = viewer?.id === profile.id;
 
   const [{ data: needsData }, { data: dupsData }] = await Promise.all([
     supabase
@@ -107,10 +112,22 @@ export default async function PublicProfilePage({
               Contactar por WhatsApp
             </a>
           </div>
-        ) : (
-          <p className="mt-4 text-xs text-slate-500">
-            El usuario no ha publicado su contacto.
-          </p>
+        ) : null}
+
+        {!isOwnProfile && (
+          viewer ? (
+            <MessageForm
+              recipientId={profile.id}
+              recipientName={profile.display_name}
+            />
+          ) : (
+            <p className="mt-4 text-xs text-slate-500">
+              <Link href="/login" className="text-brand-700 underline">
+                Inicia sesión
+              </Link>{" "}
+              para enviarle un mensaje.
+            </p>
+          )
         )}
       </header>
 

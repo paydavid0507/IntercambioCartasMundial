@@ -5,10 +5,17 @@ const links = [
   { href: "/album", label: "Mi álbum" },
   { href: "/compare", label: "Intercambios" },
   { href: "/search", label: "Buscar" },
+  { href: "/inbox", label: "Mensajes" },
   { href: "/profile", label: "Perfil" },
 ];
 
-export function Navbar({ displayName }: { displayName: string }) {
+export function Navbar({
+  displayName,
+  unreadMessages,
+}: {
+  displayName: string;
+  unreadMessages: number;
+}) {
   return (
     <header className="sticky top-0 z-30 border-b border-slate-200 bg-white">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
@@ -24,9 +31,14 @@ export function Navbar({ displayName }: { displayName: string }) {
             <Link
               key={l.href}
               href={l.href}
-              className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              className="relative rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
             >
               {l.label}
+              {l.href === "/inbox" && unreadMessages > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">
+                  {unreadMessages > 9 ? "9+" : unreadMessages}
+                </span>
+              )}
             </Link>
           ))}
         </nav>
@@ -46,9 +58,14 @@ export function Navbar({ displayName }: { displayName: string }) {
           <Link
             key={l.href}
             href={l.href}
-            className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap"
+            className="relative rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap"
           >
             {l.label}
+            {l.href === "/inbox" && unreadMessages > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">
+                {unreadMessages > 9 ? "9+" : unreadMessages}
+              </span>
+            )}
           </Link>
         ))}
       </nav>
