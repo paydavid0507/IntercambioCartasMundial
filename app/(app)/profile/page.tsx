@@ -87,10 +87,8 @@ export default async function ProfilePage({
     .eq("id", user.id)
     .maybeSingle();
 
-  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? "";
-  const publicUrl = profile
-    ? `${origin}/u/${profile.share_slug}`
-    : "";
+  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? "https://intercambio-cartas-mundial.vercel.app";
+  const publicUrl = profile ? `${origin}/u/${profile.share_slug}` : "";
 
   return (
     <div className="space-y-6">
@@ -181,8 +179,15 @@ export default async function ProfilePage({
           />
           {profile ? (
             <p className="text-xs text-slate-500">
-              Tu enlace público actual:{" "}
-              <span className="font-mono text-slate-700">{publicUrl}</span>
+              Tu enlace público:{" "}
+              <a
+                href={`/u/${profile.share_slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-brand-700 underline hover:text-brand-800 break-all"
+              >
+                {publicUrl}
+              </a>
             </p>
           ) : null}
         </div>
