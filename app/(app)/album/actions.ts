@@ -106,6 +106,38 @@ export async function deleteCard(
   return { ok: true };
 }
 
+export async function bulkDeleteCards(
+  kind: CardKind,
+  cardIds: string[],
+): Promise<ServerActionResult> {
+  if (cardIds.length === 0) return { ok: true };
+
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "No autenticado" };
+
+  if (kind === "needed") {
+    const { error } = await supabase
+      .from("user_card_needs")
+      .delete()
+      .eq("user_id", user.id)
+      .in("card_id", cardIds);
+    if (error) return { ok: false, error: error.message };
+  } else {
+    const { error } = await supabase
+      .from("user_card_duplicates")
+      .delete()
+      .eq("user_id", user.id)
+      .in("card_id", cardIds);
+    if (error) return { ok: false, error: error.message };
+  }
+
+  revalidatePath("/album");
+  return { ok: true };
+}
+
 export async function bulkUpsertFromText(
   kind: CardKind,
   text: string,
