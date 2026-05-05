@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { ExchangeActions } from "./ExchangeActions";
 
 type Direct = {
   seeker_user_id: string;
@@ -202,28 +203,12 @@ export default async function ComparePage() {
                     />
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-3 text-sm">
-                    <Link
-                      href={`/u/${s.share_slug}`}
-                      className="rounded-md bg-slate-100 px-3 py-1.5 font-medium text-slate-700 hover:bg-slate-200"
-                    >
-                      Ver perfil público
-                    </Link>
-                    {s.whatsapp ? (
-                      <a
-                        href={`https://wa.me/${s.whatsapp.replace(/[^0-9]/g, "")}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-md bg-green-600 px-3 py-1.5 font-medium text-white hover:bg-green-700"
-                      >
-                        Contactar por WhatsApp
-                      </a>
-                    ) : (
-                      <span className="text-xs text-slate-500">
-                        Contacto privado: usa el enlace público.
-                      </span>
-                    )}
-                  </div>
+                  <ExchangeActions
+                    shareSlug={s.share_slug}
+                    recipientId={s.owner_user_id}
+                    recipientName={s.owner_display_name}
+                    whatsapp={s.whatsapp}
+                  />
                 </CardContent>
               </Card>
             );
