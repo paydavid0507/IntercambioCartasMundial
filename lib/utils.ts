@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
   CARD_NUMBER_MAX,
-  CARD_NUMBER_MIN,
+  cardNumberMin,
   isAllowedAbbr,
   type TeamAbbr,
 } from "./teams";
@@ -58,7 +58,7 @@ export function parseQuickPaste(input: string): QuickPasteResult {
       const nums = batchMatch[2].split(",").map((s) => s.trim()).filter(Boolean);
       for (const ns of nums) {
         const num = parseInt(ns, 10);
-        if (isNaN(num) || num < CARD_NUMBER_MIN || num > CARD_NUMBER_MAX) {
+        if (isNaN(num) || num < cardNumberMin(abbrRaw) || num > CARD_NUMBER_MAX) {
           errors.push({ line: `${abbrRaw}: ${ns}`, reason: `número fuera de rango (${ns})` });
         } else {
           entries.push({ abbr: abbrRaw, number: num, quantity: 1 });
@@ -85,7 +85,7 @@ export function parseQuickPaste(input: string): QuickPasteResult {
       errors.push({ line, reason: `abreviación inválida (${abbrRaw})` });
       continue;
     }
-    if (num < CARD_NUMBER_MIN || num > CARD_NUMBER_MAX) {
+    if (num < cardNumberMin(abbrRaw) || num > CARD_NUMBER_MAX) {
       errors.push({ line, reason: `número fuera de rango (${num})` });
       continue;
     }
@@ -133,7 +133,7 @@ export function tokenizeSearch(query: string): SearchTokens {
     const num = parseInt(codeMatch[2], 10);
     if (
       isAllowedAbbr(abbrRaw) &&
-      num >= CARD_NUMBER_MIN &&
+      num >= cardNumberMin(abbrRaw) &&
       num <= CARD_NUMBER_MAX
     ) {
       return {

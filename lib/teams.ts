@@ -17,6 +17,11 @@ export const TEAM_ABBR_SET: ReadonlySet<TeamAbbr> = new Set(
 export const CARD_NUMBER_MIN = 1;
 export const CARD_NUMBER_MAX = 20;
 
+// FWC has an extra card at position 00 (World Cup trophy card).
+export function cardNumberMin(abbr: string): number {
+  return abbr.toUpperCase() === "FWC" ? 0 : CARD_NUMBER_MIN;
+}
+
 export function isAllowedAbbr(abbr: string): abbr is TeamAbbr {
   return TEAM_ABBR_SET.has(abbr.toUpperCase() as TeamAbbr);
 }

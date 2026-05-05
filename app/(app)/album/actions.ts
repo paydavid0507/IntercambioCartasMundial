@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import {
   CARD_NUMBER_MAX,
-  CARD_NUMBER_MIN,
+  cardNumberMin,
   isAllowedAbbr,
 } from "@/lib/teams";
 import { parseQuickPaste } from "@/lib/utils";
@@ -29,7 +29,7 @@ export async function upsertCard(
   if (!isAllowedAbbr(abbrUpper)) {
     return { ok: false, error: `Abreviación no permitida (${abbr})` };
   }
-  if (number < CARD_NUMBER_MIN || number > CARD_NUMBER_MAX) {
+  if (number < cardNumberMin(abbrUpper) || number > CARD_NUMBER_MAX) {
     return {
       ok: false,
       error: `Número fuera de rango (${number}). Debe estar entre 1 y 20.`,
