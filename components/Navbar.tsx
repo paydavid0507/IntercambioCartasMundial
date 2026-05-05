@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 const links = [
@@ -48,6 +49,7 @@ export function Navbar({
             {displayName}
           </span>
           <Button variant="secondary" size="sm" type="submit">
+            <LogOut className="mr-1.5 h-3.5 w-3.5" />
             Salir
           </Button>
         </form>

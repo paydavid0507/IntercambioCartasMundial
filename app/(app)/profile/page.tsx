@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { Save } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -193,7 +194,10 @@ export default async function ProfilePage({
         </div>
 
         <div className="flex justify-end gap-2">
-          <Button type="submit">Guardar cambios</Button>
+          <Button type="submit">
+            <Save className="mr-1.5 h-4 w-4" />
+            Guardar cambios
+          </Button>
         </div>
       </form>
 

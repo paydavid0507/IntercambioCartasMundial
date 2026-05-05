@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { UserPlus } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -130,6 +131,7 @@ export default async function RegisterPage({
             />
           </div>
           <Button type="submit" className="w-full">
+            <UserPlus className="mr-1.5 h-4 w-4" />
             Crear cuenta
           </Button>
         </form>

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Pencil, Check, X, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -147,9 +148,10 @@ export function CardList({ kind, rows }: { kind: CardKind; rows: CardRow[] }) {
               disabled={bulkPending}
               onClick={onBulkDelete}
             >
+              <Trash2 className="mr-1.5 h-3.5 w-3.5" />
               {bulkPending
                 ? "Eliminando..."
-                : `Eliminar seleccionadas (${selected.size})`}
+                : `Eliminar (${selected.size})`}
             </Button>
           </div>
         )}
@@ -352,12 +354,15 @@ function EditPanel({
       {error && <span className="text-sm text-red-600">{error}</span>}
       <div className="flex items-center gap-2">
         <Button size="sm" onClick={onSave} disabled={pending}>
+          <Check className="mr-1 h-3.5 w-3.5" />
           {pending ? "..." : "Guardar"}
         </Button>
         <Button size="sm" variant="danger" onClick={onDelete} disabled={pending}>
+          <Trash2 className="mr-1 h-3.5 w-3.5" />
           Eliminar
         </Button>
         <Button size="sm" variant="ghost" onClick={onClose} disabled={pending}>
+          <X className="mr-1 h-3.5 w-3.5" />
           Cancelar
         </Button>
       </div>

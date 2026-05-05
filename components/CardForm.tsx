@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Save } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
@@ -77,6 +78,7 @@ export function CardForm({ kind }: { kind: CardKind }) {
 
       <div className="flex items-end">
         <Button type="submit" disabled={pending} className="w-full sm:w-auto">
+          <Save className="mr-1.5 h-4 w-4" />
           {pending ? "Guardando..." : "Guardar"}
         </Button>
       </div>

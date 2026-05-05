@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Send } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { sendMessage } from "@/app/(app)/inbox/actions";
 
@@ -51,6 +52,7 @@ export function MessageForm({
               <span className="text-xs text-red-600">{result.error}</span>
             )}
             <Button type="submit" size="sm" disabled={pending || !body.trim()}>
+              <Send className="mr-1.5 h-3.5 w-3.5" />
               {pending ? "Enviando..." : "Enviar"}
             </Button>
           </div>

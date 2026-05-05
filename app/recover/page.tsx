@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Mail } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { mapAuthError } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
@@ -54,6 +55,7 @@ export default function RecoverPage({
             <Input id="email" name="email" type="email" required />
           </div>
           <Button type="submit" className="w-full">
+            <Mail className="mr-1.5 h-4 w-4" />
             Enviar enlace
           </Button>
         </form>

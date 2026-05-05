@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { LogIn } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -74,6 +75,7 @@ export default async function LoginPage({
             />
           </div>
           <Button type="submit" className="w-full">
+            <LogIn className="mr-1.5 h-4 w-4" />
             Entrar
           </Button>
         </form>

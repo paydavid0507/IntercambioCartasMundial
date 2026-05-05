@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import { bulkUpsertFromText, type CardKind } from "@/app/(app)/album/actions";
@@ -45,7 +46,8 @@ export function QuickPaste({ kind }: { kind: CardKind }) {
       </div>
       <div className="flex justify-end">
         <Button type="submit" disabled={pending || !text.trim()}>
-          {pending ? "Guardando..." : "Importar"}
+          <Upload className="mr-1.5 h-4 w-4" />
+          {pending ? "Importando..." : "Importar"}
         </Button>
       </div>
 

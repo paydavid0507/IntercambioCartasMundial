@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ArrowRight, LogIn, UserPlus } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/Button";
 
@@ -20,10 +21,16 @@ export default async function Landing() {
           </span>
           <nav className="flex items-center gap-2">
             <Link href="/login">
-              <Button variant="ghost">Iniciar sesión</Button>
+              <Button variant="ghost">
+                <LogIn className="mr-1.5 h-4 w-4" />
+                Iniciar sesión
+              </Button>
             </Link>
             <Link href="/register">
-              <Button>Crear cuenta</Button>
+              <Button>
+                <UserPlus className="mr-1.5 h-4 w-4" />
+                Crear cuenta
+              </Button>
             </Link>
           </nav>
         </div>
@@ -40,10 +47,14 @@ export default async function Landing() {
 
         <div className="mt-8 flex gap-3">
           <Link href="/register">
-            <Button size="lg">Empezar gratis</Button>
+            <Button size="lg">
+              Empezar gratis
+              <ArrowRight className="ml-1.5 h-4 w-4" />
+            </Button>
           </Link>
           <Link href="/login">
             <Button size="lg" variant="secondary">
+              <LogIn className="mr-1.5 h-4 w-4" />
               Ya tengo cuenta
             </Button>
           </Link>
