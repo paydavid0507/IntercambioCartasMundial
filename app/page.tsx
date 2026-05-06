@@ -20,8 +20,11 @@ export default async function Landing() {
   return (
     <main className="flex min-h-[100svh] flex-col">
 
-      {/* ── HERO OSCURO — 70svh ── */}
-      <section className="relative flex h-[70svh] flex-col overflow-hidden bg-slate-950">
+      {/* ── HERO OSCURO — 70svh — borde inferior arqueado ── */}
+      <section
+        className="relative flex h-[70svh] flex-col overflow-hidden bg-slate-950"
+        style={{ borderRadius: "0 0 50% 50% / 0 0 40px 40px" }}
+      >
 
         {/* Número 26 decorativo de fondo */}
         <span
@@ -106,7 +109,18 @@ export default async function Landing() {
       </section>
 
       {/* ── FEATURE CARDS — 25svh ── */}
-      <section className="flex h-[25svh] flex-col justify-center bg-white px-5">
+      <section className="flex h-[25svh] flex-col justify-center bg-gradient-to-b from-slate-50 to-white px-5">
+        {/* Tagline + stats */}
+        <div className="mb-2.5 flex items-center justify-between">
+          <p className="font-display text-xs tracking-widest text-slate-400 uppercase">
+            Todo en un lugar
+          </p>
+          <div className="flex items-center gap-3 text-[10px] text-slate-400">
+            <span><strong className="font-semibold text-slate-600">49</strong> selecciones</span>
+            <span><strong className="font-semibold text-slate-600">980</strong> cartas</span>
+          </div>
+        </div>
+
         <div className="grid grid-cols-3 gap-2.5">
           <FeatureCard
             icon={BookmarkPlus}
