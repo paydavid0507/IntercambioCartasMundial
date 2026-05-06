@@ -133,20 +133,18 @@ export default async function Landing() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-200 bg-white py-6">
-        <div className="flex flex-col items-center gap-3">
+      <footer className="border-t border-slate-200 bg-white py-5">
+        <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+          <span>No oficial · Solo para coleccionistas</span>
+          <span className="text-slate-300">·</span>
+          <Link href="/privacidad" className="hover:text-slate-600 underline underline-offset-2 transition-colors">
+            Política de privacidad
+          </Link>
           <img
             src="/avatar.png"
-            alt="Creador"
-            className="h-12 w-12 rounded-full object-cover ring-2 ring-slate-200"
+            alt=""
+            className="h-4 w-4 rounded-full object-cover"
           />
-          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
-            <span>No oficial · Solo para coleccionistas</span>
-            <span className="text-slate-300">·</span>
-            <Link href="/privacidad" className="hover:text-slate-600 underline underline-offset-2 transition-colors">
-              Política de privacidad
-            </Link>
-          </div>
         </div>
       </footer>
     </main>
