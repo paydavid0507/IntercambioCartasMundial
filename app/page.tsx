@@ -103,12 +103,6 @@ export default async function Landing() {
           </div>
         </div>
 
-        {/* Onda SVG hacia blanco */}
-        <div className="absolute bottom-0 left-0 right-0 z-10">
-          <svg viewBox="0 0 1440 40" fill="white" preserveAspectRatio="none" className="w-full">
-            <path d="M0 40 C360 8 1080 8 1440 40 L1440 40 L0 40 Z" />
-          </svg>
-        </div>
       </section>
 
       {/* ── FEATURE CARDS — 25svh ── */}
