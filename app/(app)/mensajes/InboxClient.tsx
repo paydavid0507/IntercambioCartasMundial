@@ -86,7 +86,7 @@ export function InboxClient({
 
       {/* Header unificado: tabs + acciones */}
       <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 
           {/* Tabs */}
           <div className="flex gap-1">
@@ -127,7 +127,7 @@ export function InboxClient({
           </div>
 
           {/* Acciones */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 sm:justify-end">
             {messages.length > 0 && (
               <>
                 {anyExpanded ? (
