@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Pencil, Check, X, Trash2 } from "lucide-react";
+import { Check, X, Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -36,6 +36,7 @@ export function CardList({ kind, rows }: { kind: CardKind; rows: CardRow[] }) {
   const [expandedId, setExpandedId] = React.useState<string | null>(null);
   const [bulkPending, startBulkTransition] = React.useTransition();
   const [bulkError, setBulkError] = React.useState<string | null>(null);
+  const [listExpanded, setListExpanded] = React.useState(false);
 
   const filtered = React.useMemo(() => {
     const q = filter.trim().toLowerCase();
@@ -164,24 +165,54 @@ export function CardList({ kind, rows }: { kind: CardKind; rows: CardRow[] }) {
         </p>
       )}
 
-      <div className="space-y-2">
-        {groups.map(([team, cards]) => (
-          <TeamSection
-            key={team}
-            kind={kind}
-            team={team}
-            cards={cards}
-            selected={selected}
-            expandedId={expandedId}
-            onToggleOne={toggleOne}
-            onToggleTeam={() => toggleTeam(cards.map((c) => c.card_id))}
-            onExpand={(id) =>
-              setExpandedId((prev) => (prev === id ? null : id))
-            }
-            onCollapse={() => setExpandedId(null)}
-          />
-        ))}
-      </div>
+      {groups.length > 0 && (
+        <>
+          <div
+            className={cn(
+              "overflow-y-auto rounded-md pr-0.5",
+              listExpanded ? "max-h-[70vh]" : "max-h-64"
+            )}
+            style={{ minHeight: "7rem" }}
+          >
+            <div className="space-y-2">
+              {groups.map(([team, cards]) => (
+                <TeamSection
+                  key={team}
+                  kind={kind}
+                  team={team}
+                  cards={cards}
+                  selected={selected}
+                  expandedId={expandedId}
+                  onToggleOne={toggleOne}
+                  onToggleTeam={() => toggleTeam(cards.map((c) => c.card_id))}
+                  onExpand={(id) =>
+                    setExpandedId((prev) => (prev === id ? null : id))
+                  }
+                  onCollapse={() => setExpandedId(null)}
+                />
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setListExpanded((p) => !p)}
+            className="flex w-full items-center justify-center gap-1 rounded-md border border-slate-200 bg-slate-50 py-1.5 text-xs text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+          >
+            {listExpanded ? (
+              <>
+                <ChevronUp className="h-3.5 w-3.5" />
+                Ver menos
+              </>
+            ) : (
+              <>
+                <ChevronDown className="h-3.5 w-3.5" />
+                Ver todo · {rows.length} {rows.length === 1 ? "carta" : "cartas"}
+              </>
+            )}
+          </button>
+        </>
+      )}
     </div>
   );
 }
