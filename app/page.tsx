@@ -135,6 +135,10 @@ export default async function Landing() {
 
       <footer className="border-t border-slate-200 bg-white py-5 text-center text-xs text-slate-400">
         Hecho con Next.js + Supabase · No oficial · Solo para coleccionistas
+        {" · "}
+        <Link href="/privacidad" className="hover:text-slate-600 underline underline-offset-2">
+          Política de privacidad
+        </Link>
       </footer>
     </main>
   );

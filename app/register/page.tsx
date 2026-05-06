@@ -123,6 +123,12 @@ export default async function RegisterPage({
               Inicia sesión
             </Link>
           </p>
+          <p className="mt-2 text-center text-xs text-slate-600">
+            Al registrarte aceptas nuestra{" "}
+            <Link href="/privacidad" className="text-slate-500 hover:text-amber-400 underline underline-offset-2 transition-colors">
+              política de privacidad
+            </Link>
+          </p>
         </div>
       </div>
     </main>
