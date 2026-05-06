@@ -20,8 +20,8 @@ export default async function Landing() {
   return (
     <main className="flex min-h-[100svh] flex-col">
 
-      {/* ── HERO OSCURO ── */}
-      <section className="relative flex flex-col overflow-hidden bg-slate-950 pb-10 pt-0">
+      {/* ── HERO OSCURO — 70% ── */}
+      <section className="relative flex h-[70svh] flex-col overflow-hidden bg-slate-950">
 
         {/* Ambient glows */}
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-amber-500/20 blur-3xl" />
@@ -52,8 +52,8 @@ export default async function Landing() {
           </nav>
         </header>
 
-        {/* Headline */}
-        <div className="relative z-10 px-5 pt-2">
+        {/* Headline — ocupa el espacio restante centrado verticalmente */}
+        <div className="relative z-10 flex flex-1 flex-col justify-center px-5">
           <div className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1">
             <Wc2026Icon className="h-3 w-3 text-amber-400" />
             <span className="text-[10px] font-medium tracking-widest text-amber-300 uppercase">Mundial 2026</span>
@@ -92,8 +92,8 @@ export default async function Landing() {
         />
       </section>
 
-      {/* ── FEATURE CARDS BLANCAS ── */}
-      <section className="flex-1 bg-white px-5 pb-4 pt-2">
+      {/* ── FEATURE CARDS BLANCAS — 25% ── */}
+      <section className="flex h-[25svh] flex-col justify-center bg-white px-5">
         <p className="mb-3 font-display text-base tracking-widest text-slate-400 uppercase">Todo en un lugar</p>
         <div className="grid grid-cols-3 gap-3">
           <FeatureCard
@@ -120,8 +120,8 @@ export default async function Landing() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-white pb-4 pt-1">
+      {/* Footer — 5% */}
+      <footer className="flex h-[5svh] items-center bg-white">
         <div className="flex items-center justify-center gap-2 text-[10px] text-slate-400">
           <span>No oficial · Para coleccionistas de Honduras</span>
           <span className="text-slate-300">·</span>
