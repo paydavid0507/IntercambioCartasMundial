@@ -160,11 +160,8 @@ export default async function ComparePage() {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-bold">Intercambios</h1>
-        <p className="text-sm text-slate-500">
-          Las coincidencias mutuas aparecen primero, luego las directas, y al
-          final aquellas en las que solo tú puedes dar.
-        </p>
+        <h1 className="font-display text-4xl tracking-wide text-slate-900">INTERCAMBIOS</h1>
+        <p className="text-sm text-slate-500">Mutuas primero, luego directas, al final solo tú das.</p>
       </header>
 
       {summaries.length === 0 ? (

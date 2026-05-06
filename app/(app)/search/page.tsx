@@ -12,10 +12,9 @@ export default async function SearchPage() {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-bold">Buscar</h1>
+        <h1 className="font-display text-4xl tracking-wide text-slate-900">BUSCAR</h1>
         <p className="text-sm text-slate-500">
-          Busca por carta (ej: <code>MEX-05</code>), abreviación, usuario,
-          ciudad o país.
+          Por carta (ej: <code className="rounded bg-slate-100 px-1 font-mono text-xs">MEX-05</code>), equipo, usuario, ciudad o país.
         </p>
       </header>
       <SearchClient currentUserId={user.id} />

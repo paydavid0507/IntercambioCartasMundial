@@ -94,10 +94,8 @@ export default async function ProfilePage({
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-bold">Mi perfil</h1>
-        <p className="text-sm text-slate-500">
-          Esta información se usa para que otros usuarios puedan contactarte.
-        </p>
+        <h1 className="font-display text-4xl tracking-wide text-slate-900">MI PERFIL</h1>
+        <p className="text-sm text-slate-500">Esta información se usa para que otros usuarios puedan contactarte.</p>
       </header>
 
       {searchParams.error ? (

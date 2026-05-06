@@ -66,10 +66,8 @@ export default async function AlbumPage() {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-bold">Mi álbum</h1>
-        <p className="text-sm text-slate-500">
-          Administra tus cartas faltantes y repetidas.
-        </p>
+        <h1 className="font-display text-4xl tracking-wide text-slate-900">MI ÁLBUM</h1>
+        <p className="text-sm text-slate-500">Administra tus cartas faltantes y repetidas.</p>
       </header>
 
       <section className="grid grid-cols-3 gap-3">

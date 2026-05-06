@@ -89,8 +89,10 @@ export default async function PublicProfilePage({
         </Link>
       </div>
 
-      <header className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-        <h1 className="text-2xl font-bold">{profile.display_name}</h1>
+      <header className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="h-2 w-full bg-gradient-to-r from-brand-600 via-amber-500 to-brand-400" />
+        <div className="p-6">
+        <h1 className="font-display text-4xl tracking-wide text-slate-900">{profile.display_name}</h1>
         <p className="mt-1 text-sm text-slate-500">
           {[profile.city, profile.country].filter(Boolean).join(", ") ||
             "Ubicación no indicada"}
@@ -101,13 +103,14 @@ export default async function PublicProfilePage({
           <Stat label="Cartas únicas faltantes" value={needs.length} />
           <Stat label="Cartas únicas repetidas" value={duplicates.length} />
         </div>
+        </div>
         {profile.show_contact && profile.whatsapp ? (
-          <div className="mt-4">
+          <div className="border-t border-slate-100 px-6 pb-5 pt-4">
             <a
               href={`https://wa.me/${profile.whatsapp.replace(/[^0-9]/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+              className="inline-flex items-center rounded-xl bg-green-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-green-500 transition-colors"
             >
               Contactar por WhatsApp
             </a>
@@ -115,19 +118,18 @@ export default async function PublicProfilePage({
         ) : null}
 
         {!isOwnProfile && (
-          viewer ? (
-            <MessageForm
-              recipientId={profile.id}
-              recipientName={profile.display_name}
-            />
-          ) : (
-            <p className="mt-4 text-xs text-slate-500">
-              <Link href="/login" className="text-brand-700 underline">
-                Inicia sesión
-              </Link>{" "}
-              para enviarle un mensaje.
-            </p>
-          )
+          <div className="border-t border-slate-100 px-6 pb-5 pt-4">
+            {viewer ? (
+              <MessageForm recipientId={profile.id} recipientName={profile.display_name} />
+            ) : (
+              <p className="text-xs text-slate-500">
+                <Link href="/login" className="font-medium text-brand-600 hover:text-brand-700">
+                  Inicia sesión
+                </Link>{" "}
+                para enviarle un mensaje.
+              </p>
+            )}
+          </div>
         )}
       </header>
 

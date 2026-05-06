@@ -21,20 +21,17 @@ export function NavLinks({ unreadMessages }: { unreadMessages: number }) {
           <Link
             key={l.href}
             href={l.href}
-            className={`relative rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+            className={`relative rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
               active
-                ? "bg-slate-100 text-slate-900"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                ? "bg-slate-800 text-white"
+                : "text-slate-400 hover:bg-slate-800/60 hover:text-white"
             }`}
           >
             {l.label}
             {l.href === "/mensajes" && unreadMessages > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-bold text-slate-950">
                 {unreadMessages > 9 ? "9+" : unreadMessages}
               </span>
-            )}
-            {active && (
-              <span className="absolute bottom-0 left-1/2 h-0.5 w-4 -translate-x-1/2 rounded-full bg-brand-600" />
             )}
           </Link>
         );
