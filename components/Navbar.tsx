@@ -55,22 +55,6 @@ export function Navbar({
         </form>
       </div>
 
-      <nav className="flex items-center gap-1 overflow-x-auto border-t border-slate-100 px-4 py-2 sm:hidden">
-        {links.map((l) => (
-          <Link
-            key={l.href}
-            href={l.href}
-            className="relative rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 whitespace-nowrap"
-          >
-            {l.label}
-            {l.href === "/mensajes" && unreadMessages > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">
-                {unreadMessages > 9 ? "9+" : unreadMessages}
-              </span>
-            )}
-          </Link>
-        ))}
-      </nav>
     </header>
   );
 }
