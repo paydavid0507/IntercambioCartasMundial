@@ -1,14 +1,7 @@
 import Link from "next/link";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-
-const links = [
-  { href: "/album", label: "Mi álbum" },
-  { href: "/compare", label: "Intercambios" },
-  { href: "/search", label: "Buscar" },
-  { href: "/mensajes", label: "Mensajes" },
-  { href: "/profile", label: "Perfil" },
-];
+import { NavLinks } from "@/components/NavLinks";
 
 export function Navbar({
   displayName,
@@ -27,22 +20,7 @@ export function Navbar({
           Intercambia Mundial 2026
         </Link>
 
-        <nav className="hidden items-center gap-1 sm:flex">
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="relative rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-            >
-              {l.label}
-              {l.href === "/mensajes" && unreadMessages > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">
-                  {unreadMessages > 9 ? "9+" : unreadMessages}
-                </span>
-              )}
-            </Link>
-          ))}
-        </nav>
+        <NavLinks unreadMessages={unreadMessages} />
 
         <form action="/auth/sign-out" method="post" className="flex items-center gap-2">
           <span className="hidden text-sm text-slate-500 sm:inline">
@@ -54,7 +32,6 @@ export function Navbar({
           </Button>
         </form>
       </div>
-
     </header>
   );
 }

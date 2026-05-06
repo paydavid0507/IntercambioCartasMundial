@@ -1,6 +1,7 @@
+import React from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowRight, LogIn, UserPlus } from "lucide-react";
+import { ArrowRight, LogIn, UserPlus, BookmarkPlus, Copy, Shuffle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/Button";
 
@@ -62,14 +63,17 @@ export default async function Landing() {
 
         <div className="mt-16 grid w-full grid-cols-1 gap-6 text-left sm:grid-cols-3">
           <FeatureCard
+            icon={BookmarkPlus}
             title="Lista de faltantes"
             description="Selecciona país y número de carta, y la app valida que sean válidas (1 a 20)."
           />
           <FeatureCard
+            icon={Copy}
             title="Cartas repetidas"
             description="Indica cuántas tienes disponibles para intercambio. Edita o elimina en cualquier momento."
           />
           <FeatureCard
+            icon={Shuffle}
             title="Coincidencias automáticas"
             description="Mostramos primero las coincidencias mutuas: tú das, ellos dan."
           />
@@ -84,16 +88,21 @@ export default async function Landing() {
 }
 
 function FeatureCard({
+  icon: Icon,
   title,
   description,
 }: {
+  icon: React.ComponentType<{ className?: string }>;
   title: string;
   description: string;
 }) {
   return (
     <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="mb-3 inline-flex rounded-md bg-brand-50 p-2">
+        <Icon className="h-5 w-5 text-brand-600" />
+      </div>
       <h3 className="text-base font-semibold">{title}</h3>
-      <p className="mt-2 text-sm text-slate-600">{description}</p>
+      <p className="mt-1.5 text-sm text-slate-600">{description}</p>
     </div>
   );
 }

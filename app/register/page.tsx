@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { UserPlus } from "lucide-react";
+import { UserPlus, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 import { slugify, mapAuthError } from "@/lib/utils";
 
 async function signUp(formData: FormData) {
@@ -82,7 +83,16 @@ export default async function RegisterPage({
 
   return (
     <main className="flex flex-1 items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="w-full max-w-md">
+        <Link
+          href="/"
+          className="mb-6 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 transition-colors"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          Intercambia Mundial 2026
+        </Link>
+
+      <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
         <h1 className="text-xl font-semibold">Crear cuenta</h1>
         <p className="mt-1 text-sm text-slate-500">
           Tu información de cartas se guarda asociada a tu cuenta.
@@ -121,14 +131,7 @@ export default async function RegisterPage({
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="password">Contraseña</Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              minLength={6}
-              required
-            />
+            <PasswordInput id="password" name="password" autoComplete="new-password" minLength={6} required />
           </div>
           <Button type="submit" className="w-full">
             <UserPlus className="mr-1.5 h-4 w-4" />
@@ -146,6 +149,7 @@ export default async function RegisterPage({
             Inicia sesión
           </Link>
         </p>
+      </div>
       </div>
     </main>
   );

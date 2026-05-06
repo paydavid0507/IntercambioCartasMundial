@@ -316,6 +316,7 @@ function EditPanel({
   const [qty, setQty] = React.useState(card.quantity);
   const [pending, startTransition] = React.useTransition();
   const [error, setError] = React.useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = React.useState(false);
 
   function onSave() {
     setError(null);
@@ -327,7 +328,6 @@ function EditPanel({
   }
 
   function onDelete() {
-    if (!confirm(`¿Eliminar ${card.card_code}?`)) return;
     setError(null);
     startTransition(async () => {
       const res = await deleteCard(kind, card.card_id);
@@ -357,10 +357,24 @@ function EditPanel({
           <Check className="mr-1 h-3.5 w-3.5" />
           {pending ? "..." : "Guardar"}
         </Button>
-        <Button size="sm" variant="danger" onClick={onDelete} disabled={pending}>
-          <Trash2 className="mr-1 h-3.5 w-3.5" />
-          Eliminar
-        </Button>
+        {confirmDelete ? (
+          <div className="flex items-center gap-1.5 rounded-md bg-red-50 px-2 py-1 ring-1 ring-red-200">
+            <span className="text-xs font-medium text-red-700">¿Eliminar?</span>
+            <button type="button" onClick={onDelete} disabled={pending}
+              className="rounded px-2 py-0.5 text-xs font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 transition-colors">
+              {pending ? "..." : "Sí"}
+            </button>
+            <button type="button" onClick={() => setConfirmDelete(false)} disabled={pending}
+              className="rounded px-2 py-0.5 text-xs text-slate-600 hover:bg-slate-200 transition-colors">
+              No
+            </button>
+          </div>
+        ) : (
+          <Button size="sm" variant="danger" onClick={() => setConfirmDelete(true)} disabled={pending}>
+            <Trash2 className="mr-1 h-3.5 w-3.5" />
+            Eliminar
+          </Button>
+        )}
         <Button size="sm" variant="ghost" onClick={onClose} disabled={pending}>
           <X className="mr-1 h-3.5 w-3.5" />
           Cancelar
