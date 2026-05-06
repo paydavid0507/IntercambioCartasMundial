@@ -3,7 +3,15 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ArrowRight, LogIn, UserPlus, BookmarkPlus, Copy, Shuffle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { Button } from "@/components/ui/Button";
+
+function Wc2026Icon({ className }: { className?: string }) {
+  // Soccer ball icon — universal World Cup symbol
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.93V15l-3.5-2.02V10.5l1.5-.87 3 1.73 3-1.73 1.5.87v2.48L13 15v1.93A8.01 8.01 0 0 1 11 16.93zM18.93 13H17.5l-1.5-.87v-1.26l2.07-1.2c.55.97.89 2.07.86 3.33zM15.5 7.13 14 8l-2-1.15V5.07a8.01 8.01 0 0 1 3.5 2.06zM10 5.07v1.78L8 8 6.5 7.13A8.01 8.01 0 0 1 10 5.07zM5.93 10.67 8 11.87v1.26L6.5 14H5.07a8.04 8.04 0 0 1-.14-3.33z" />
+    </svg>
+  );
+}
 
 export default async function Landing() {
   const supabase = createClient();
@@ -53,9 +61,9 @@ export default async function Landing() {
         {/* Main headline */}
         <div className="relative z-10 flex flex-1 flex-col items-start justify-center px-5 pb-16 pt-4">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+            <Wc2026Icon className="h-4 w-4 text-amber-400" />
             <span className="text-xs font-medium tracking-wider text-amber-300 uppercase">
-              Panini Mundial 2026
+              FIFA World Cup 2026™
             </span>
           </div>
 
@@ -126,7 +134,7 @@ export default async function Landing() {
       </section>
 
       <footer className="border-t border-slate-200 bg-white py-5 text-center text-xs text-slate-400">
-        Hecho con Next.js + Supabase · No afiliado a Panini
+        Hecho con Next.js + Supabase · No oficial · Solo para coleccionistas
       </footer>
     </main>
   );

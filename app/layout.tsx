@@ -18,7 +18,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Intercambia Mundial 2026",
   description:
-    "Administra tus cartas faltantes y repetidas del álbum Panini Mundial 2026 y encuentra usuarios para intercambiar.",
+    "Administra tus cartas faltantes y repetidas del Mundial 2026 y encuentra usuarios para intercambiar.",
 };
 
 export default function RootLayout({
