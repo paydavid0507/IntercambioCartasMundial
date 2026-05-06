@@ -20,11 +20,8 @@ export default async function Landing() {
   return (
     <main className="flex min-h-[100svh] flex-col">
 
-      {/* ── HERO OSCURO — 70svh — borde inferior arqueado ── */}
-      <section
-        className="relative flex h-[70svh] flex-col overflow-hidden bg-slate-950"
-        style={{ borderRadius: "0 0 50% 50% / 0 0 40px 40px" }}
-      >
+      {/* ── HERO OSCURO — 70svh ── */}
+      <section className="relative flex h-[70svh] flex-col overflow-hidden bg-slate-950">
 
         {/* Número 26 decorativo de fondo */}
         <span
@@ -106,6 +103,17 @@ export default async function Landing() {
           </div>
         </div>
 
+        {/* Sad smile — blanco sube hacia el centro del hero */}
+        <div className="absolute bottom-0 left-0 right-0 z-10">
+          <svg
+            viewBox="0 0 1440 52"
+            preserveAspectRatio="none"
+            className="w-full"
+            style={{ height: "52px", display: "block" }}
+          >
+            <path d="M0 52 Q720 0 1440 52 L1440 54 L0 54 Z" fill="white" />
+          </svg>
+        </div>
       </section>
 
       {/* ── FEATURE CARDS — 25svh ── */}
@@ -116,7 +124,7 @@ export default async function Landing() {
             Todo en un lugar
           </p>
           <div className="flex items-center gap-3 text-[10px] text-slate-400">
-            <span><strong className="font-semibold text-slate-600">49</strong> selecciones</span>
+            <span><strong className="font-semibold text-slate-600">48</strong> selecciones</span>
             <span><strong className="font-semibold text-slate-600">980</strong> cartas</span>
           </div>
         </div>
