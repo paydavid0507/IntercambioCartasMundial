@@ -94,7 +94,7 @@ export default async function Landing() {
 
           {/* Social proof */}
           <p className="mt-6 text-xs text-slate-600">
-            Gratis · Sin publicidad · Para coleccionistas de Honduras y Latinoamérica
+            Gratis · Sin publicidad · Para coleccionistas de Honduras
           </p>
         </div>
 
