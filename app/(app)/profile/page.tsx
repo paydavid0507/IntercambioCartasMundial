@@ -21,6 +21,7 @@ async function updateProfile(formData: FormData) {
   const country = String(formData.get("country") ?? "").trim() || null;
   const whatsapp = String(formData.get("whatsapp") ?? "").trim() || null;
   const show_contact = formData.get("show_contact") === "on";
+  const notify_matches = formData.get("notify_matches") === "on";
   const slugInput = String(formData.get("share_slug") ?? "").trim();
   const share_slug = slugInput ? slugify(slugInput) : slugify(display_name);
 
@@ -49,16 +50,20 @@ async function updateProfile(formData: FormData) {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const profileUpdate: any = {
+    display_name,
+    city,
+    country,
+    whatsapp,
+    show_contact,
+    notify_matches,
+    share_slug,
+  };
+
   const { error } = await supabase
     .from("profiles")
-    .update({
-      display_name,
-      city,
-      country,
-      whatsapp,
-      show_contact,
-      share_slug,
-    })
+    .update(profileUpdate)
     .eq("id", user.id);
 
   if (error) {
@@ -164,6 +169,21 @@ export default async function ProfilePage({
             <span className="font-medium">Mostrar mi WhatsApp públicamente</span>
             <span className="block text-slate-500">
               Si está apagado, otros usuarios solo verán tu nombre y ubicación.
+            </span>
+          </span>
+        </label>
+
+        <label className="flex items-start gap-3 rounded-md border border-slate-200 p-3 text-sm">
+          <input
+            type="checkbox"
+            name="notify_matches"
+            defaultChecked={(profile as { notify_matches?: boolean })?.notify_matches ?? false}
+            className="mt-1 h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+          />
+          <span>
+            <span className="font-medium">Notificarme cuando haya nuevos intercambios</span>
+            <span className="block text-slate-500">
+              Te avisamos en tu bandeja cuando alguien agregue cartas que te faltan o necesite las tuyas. Si tienes WhatsApp público, el mensaje incluirá un enlace directo.
             </span>
           </span>
         </label>

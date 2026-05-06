@@ -8,6 +8,7 @@ import {
   isAllowedAbbr,
 } from "@/lib/teams";
 import { parseQuickPaste } from "@/lib/utils";
+import { notifyMatchedUsers } from "@/lib/notifications";
 
 export type CardKind = "needed" | "duplicate";
 
@@ -50,7 +51,17 @@ export async function upsertCard(
     return { ok: false, error: "Carta no encontrada en el catálogo" };
   }
 
+  // Determine if this is a new card (not an update) for notification purposes
+  let isNew = false;
   if (kind === "needed") {
+    const { data: existing } = await supabase
+      .from("user_card_needs")
+      .select("card_id")
+      .eq("user_id", user.id)
+      .eq("card_id", card.id)
+      .maybeSingle();
+    isNew = !existing;
+
     const { error } = await supabase
       .from("user_card_needs")
       .upsert(
@@ -59,6 +70,14 @@ export async function upsertCard(
       );
     if (error) return { ok: false, error: error.message };
   } else {
+    const { data: existing } = await supabase
+      .from("user_card_duplicates")
+      .select("card_id")
+      .eq("user_id", user.id)
+      .eq("card_id", card.id)
+      .maybeSingle();
+    isNew = !existing;
+
     const { error } = await supabase
       .from("user_card_duplicates")
       .upsert(
@@ -70,6 +89,10 @@ export async function upsertCard(
         { onConflict: "user_id,card_id" },
       );
     if (error) return { ok: false, error: error.message };
+  }
+
+  if (isNew) {
+    await notifyMatchedUsers(user.id, [card.id], kind, supabase);
   }
 
   revalidatePath("/album");
@@ -279,6 +302,11 @@ export async function bulkUpsertFromText(
         errors: [{ line: "(guardado)", reason: error.message }],
       };
     }
+  }
+
+  if (added > 0) {
+    const newCardIds = cardIds.filter((id) => !existingSet.has(id));
+    await notifyMatchedUsers(user.id, newCardIds, kind, supabase);
   }
 
   revalidatePath("/album");
