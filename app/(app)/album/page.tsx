@@ -72,18 +72,10 @@ export default async function AlbumPage() {
         </p>
       </header>
 
-      <section className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <SummaryItem label="Faltantes" value={totalNeeded} sub={`${needs.length} cartas únicas`} />
-        <SummaryItem
-          label="Repetidas"
-          value={totalDuplicates}
-          sub={`${uniqueDuplicates} cartas únicas`}
-        />
-        <SummaryItem
-          label="Total registrado"
-          value={totalNeeded + totalDuplicates}
-          sub="entre faltantes y repetidas"
-        />
+      <section className="grid grid-cols-3 gap-3">
+        <SummaryItem label="Faltantes" value={totalNeeded} sub={`${needs.length} únicas`} />
+        <SummaryItem label="Repetidas" value={totalDuplicates} sub={`${uniqueDuplicates} únicas`} />
+        <SummaryItem label="Total" value={totalNeeded + totalDuplicates} sub="registradas" />
       </section>
 
       <Tabs defaultValue="needs">
@@ -120,10 +112,10 @@ function SummaryItem({
   sub: string;
 }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-      <p className="text-xs uppercase tracking-wide text-slate-500">{label}</p>
-      <p className="mt-1 text-2xl font-semibold">{value}</p>
-      <p className="text-xs text-slate-500">{sub}</p>
+    <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm text-center sm:p-4 sm:text-left">
+      <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 sm:text-xs">{label}</p>
+      <p className="mt-0.5 font-display text-3xl tracking-wide text-slate-900 sm:text-4xl">{value}</p>
+      <p className="text-[10px] text-slate-400 sm:text-xs">{sub}</p>
     </div>
   );
 }

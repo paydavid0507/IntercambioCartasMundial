@@ -23,16 +23,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: [
-          "ui-sans-serif",
-          "system-ui",
-          "-apple-system",
-          "Segoe UI",
-          "Roboto",
-          "Helvetica",
-          "Arial",
-          "sans-serif",
-        ],
+        display: ["var(--font-display)", "Impact", "Arial Narrow", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "-apple-system", "sans-serif"],
       },
     },
   },
