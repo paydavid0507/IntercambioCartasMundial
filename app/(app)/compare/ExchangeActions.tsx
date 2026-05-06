@@ -36,12 +36,9 @@ export function ExchangeActions({
     startTransition(async () => {
       const res = await sendMessage(recipientId, body);
       if (res.ok) {
-        setSent(true);
+        setShowForm(false);
         setBody("");
-        setTimeout(() => {
-          setShowForm(false);
-          setSent(false);
-        }, 2000);
+        setSent(false);
       } else {
         setError(res.error ?? "Error al enviar.");
       }
