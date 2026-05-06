@@ -63,7 +63,7 @@ export default async function Landing() {
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1">
             <Wc2026Icon className="h-4 w-4 text-amber-400" />
             <span className="text-xs font-medium tracking-wider text-amber-300 uppercase">
-              FIFA World Cup 2026™
+              Mundial 2026
             </span>
           </div>
 
