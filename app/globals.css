@@ -77,8 +77,6 @@
   }
 }
 
-html, body { height: 100%; }
-
 body {
   @apply bg-slate-50 text-slate-900 antialiased font-sans;
   /* Subtle dot-grid texture — do not remove, it's part of the brand */
