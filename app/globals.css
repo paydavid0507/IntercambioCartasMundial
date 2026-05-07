@@ -2,25 +2,129 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── INTERCAMBIA MUNDIAL 2026 — CSS Design Tokens ───────────────────────
+   These variables ARE the theme. Every component should reference these
+   rather than hard-coded Tailwind color classes where possible.
+   Full guide: see THEME.md
+   ─────────────────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+
+  /* Brand — sky blue (matches Tailwind `brand` scale) */
+  --color-brand:        #0284c7; /* brand-600 — buttons, links, focus */
+  --color-brand-hover:  #0369a1; /* brand-700 */
+  --color-brand-soft:   #e0f2fe; /* brand-100 — tinted backgrounds */
+
+  /* Accent — amber (matches Tailwind `accent` scale) */
+  --color-accent:       #f59e0b; /* accent-500 — badges, unread */
+  --color-accent-soft:  #fbbf24; /* accent-400 — active nav, accent bars */
+  --color-accent-muted: #fef3c7; /* accent-100 — tinted backgrounds */
+
+  /* Surfaces */
+  --color-surface:        #ffffff; /* cards, forms */
+  --color-surface-raised: #f8fafc; /* page background (slate-50) */
+  --color-surface-subtle: #f1f5f9; /* hover state (slate-100) */
+
+  /* Borders */
+  --color-border:       #e2e8f0; /* slate-200 — default borders */
+  --color-border-input: #cbd5e1; /* slate-300 — input borders */
+  --color-border-strong:#94a3b8; /* slate-400 — separators */
+
+  /* Text */
+  --color-text-primary:   #0f172a; /* slate-900 */
+  --color-text-secondary: #64748b; /* slate-500 */
+  --color-text-muted:     #94a3b8; /* slate-400 */
+  --color-text-inverse:   #ffffff; /* on dark backgrounds */
+
+  /* Nav (dark shell) */
+  --color-nav-bg:     #020617; /* slate-950 */
+  --color-nav-border: #1e293b; /* slate-800 */
+
+  /* Semantic states */
+  --color-success: #16a34a; /* green-600 */
+  --color-danger:  #dc2626; /* red-600 */
+  --color-warning: #f59e0b; /* accent-500 */
+
+  /* Intercambios match types */
+  --color-mutual-bg:     #dcfce7; /* green-100 */
+  --color-mutual-text:   #166534; /* green-800 */
+  --color-mutual-border: #86efac; /* green-300 */
+  --color-direct-bg:     #e0f2fe; /* sky-100 */
+  --color-direct-text:   #075985; /* sky-800 */
+  --color-direct-border: #bae6fd; /* sky-200 */
+
+  /* Radii */
+  --radius-sm:   4px;    /* chips, tags */
+  --radius-md:   6px;    /* buttons, inputs */
+  --radius-card: 8px;    /* cards */
+  --radius-lg:   12px;   /* large cards, modals */
+  --radius-full: 9999px; /* badges, pills, avatar */
+
+  /* Elevation / Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+
+  /* Motion */
+  --duration-fast:   150ms;
+  --duration-normal: 200ms;
+  --duration-slow:   300ms;
+  --ease-default:    cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Base layer ─────────────────────────────────────────────────────── */
 @layer base {
   button, [role="button"], a {
-    touch-action: manipulation;
+    touch-action: manipulation; /* no 300ms delay on iOS */
   }
 }
 
-:root {
-  color-scheme: light;
-}
-
-html,
-body {
-  height: 100%;
-}
+html, body { height: 100%; }
 
 body {
   @apply bg-slate-50 text-slate-900 antialiased font-sans;
+  /* Subtle dot-grid texture — do not remove, it's part of the brand */
   background-image: radial-gradient(circle, rgba(148, 163, 184, 0.22) 1px, transparent 1px);
   background-size: 22px 22px;
+}
+
+/* ─── Component utilities ─────────────────────────────────────────────
+   Reusable patterns. Prefer these over repeating Tailwind classes.
+   ─────────────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* Page section header — always paired with an amber accent bar */
+  .page-header {
+    @apply flex items-start gap-3;
+  }
+  .page-header-bar {
+    @apply mt-2 h-7 w-[3px] flex-shrink-0 rounded-full bg-accent-400;
+  }
+  .page-title {
+    @apply font-display text-4xl tracking-wide text-slate-900;
+  }
+  .page-subtitle {
+    @apply text-sm text-slate-500;
+  }
+
+  /* Standard white content card */
+  .card {
+    @apply rounded-lg border border-slate-200 bg-white shadow-card;
+  }
+
+  /* Stat card with colored top border */
+  .stat-card {
+    @apply card border-t-[3px] p-3 text-center sm:p-4 sm:text-left;
+  }
+  .stat-card-faltantes { @apply border-t-accent-400; }
+  .stat-card-repetidas  { @apply border-t-sky-400; }
+  .stat-card-total      { @apply border-t-emerald-400; }
+
+  /* Mobile action button — circle icon + caption below */
+  .action-btn-mobile {
+    @apply flex flex-col items-center gap-1;
+  }
+  .action-btn-circle {
+    @apply flex h-11 w-11 items-center justify-center rounded-full transition-colors sm:hidden;
+  }
 }
 
 @keyframes fadeUp {
