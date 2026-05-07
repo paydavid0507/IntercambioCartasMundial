@@ -199,7 +199,7 @@ export function InboxClient({
             const isUnread = tab === "inbox" && msg.read_at === null;
             const isOpen = expanded.has(msg.id);
             return (
-              <li key={msg.id} className={isUnread ? "bg-brand-50/40" : ""}>
+              <li key={msg.id} className={isUnread ? "bg-brand-50/40 border-l-[3px] border-l-brand-400" : "border-l-[3px] border-l-transparent"}>
                 <button
                   type="button"
                   onClick={() => toggle(msg)}
@@ -208,7 +208,7 @@ export function InboxClient({
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5 min-w-0">
                       {isUnread
-                        ? <span className="h-2 w-2 shrink-0 rounded-full bg-brand-500" />
+                        ? <span className="h-2 w-2 shrink-0 rounded-full bg-brand-500 animate-pulse-dot" />
                         : <span className="h-2 w-2 shrink-0" />
                       }
                       <div className="min-w-0">

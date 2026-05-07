@@ -65,9 +65,12 @@ export default async function AlbumPage() {
 
   return (
     <div className="space-y-6">
-      <header>
-        <h1 className="font-display text-4xl tracking-wide text-slate-900">MI ÁLBUM</h1>
-        <p className="text-sm text-slate-500">Administra tus cartas faltantes y repetidas.</p>
+      <header className="flex items-start gap-3">
+        <span className="mt-2 h-7 w-[3px] flex-shrink-0 rounded-full bg-amber-400" />
+        <div>
+          <h1 className="font-display text-4xl tracking-wide text-slate-900">MI ÁLBUM</h1>
+          <p className="text-sm text-slate-500">Administra tus cartas faltantes y repetidas.</p>
+        </div>
       </header>
 
       <section className="grid grid-cols-3 gap-3">
@@ -109,8 +112,15 @@ function SummaryItem({
   value: number;
   sub: string;
 }) {
+  const topBorder =
+    label === "Faltantes"
+      ? "border-t-amber-400"
+      : label === "Repetidas"
+        ? "border-t-sky-400"
+        : "border-t-emerald-400";
+
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm text-center sm:p-4 sm:text-left">
+    <div className={`rounded-xl border border-slate-200 bg-white p-3 shadow-sm text-center sm:p-4 sm:text-left border-t-[3px] ${topBorder}`}>
       <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 sm:text-xs">{label}</p>
       <p className="mt-0.5 font-display text-3xl tracking-wide text-slate-900 sm:text-4xl">{value}</p>
       <p className="text-[10px] text-slate-400 sm:text-xs">{sub}</p>

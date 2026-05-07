@@ -10,7 +10,8 @@ export function Navbar({
   unreadMessages: number;
 }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-800 bg-slate-950">
+    <header className="sticky top-0 z-30 border-b border-slate-800 bg-slate-950 relative">
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-400/40 to-transparent" />
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
         <Link
           href="/album"

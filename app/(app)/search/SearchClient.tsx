@@ -188,7 +188,10 @@ export function SearchClient({ currentUserId }: { currentUserId: string }) {
       />
 
       {loading ? (
-        <p className="text-sm text-slate-500">Buscando...</p>
+        <p className="flex items-center gap-2 text-sm text-slate-400">
+          <span className="inline-block h-4 w-4 animate-spin-slow rounded-full border-2 border-slate-200 border-t-sky-500" />
+          Buscando...
+        </p>
       ) : null}
 
       {!loading && debounced && profiles.length === 0 && cardOwners.length === 0 ? (

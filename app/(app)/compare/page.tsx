@@ -160,9 +160,12 @@ export default async function ComparePage() {
 
   return (
     <div className="space-y-6">
-      <header>
-        <h1 className="font-display text-4xl tracking-wide text-slate-900">INTERCAMBIOS</h1>
-        <p className="text-sm text-slate-500">Mutuas primero, luego directas, al final solo tú das.</p>
+      <header className="flex items-start gap-3">
+        <span className="mt-2 h-7 w-[3px] flex-shrink-0 rounded-full bg-amber-400" />
+        <div>
+          <h1 className="font-display text-4xl tracking-wide text-slate-900">INTERCAMBIOS</h1>
+          <p className="text-sm text-slate-500">Mutuas primero, luego directas, al final solo tú das.</p>
+        </div>
       </header>
 
       {summaries.length === 0 ? (
@@ -176,7 +179,13 @@ export default async function ComparePage() {
             const ownerList = ownerCards.get(s.owner_user_id) ?? [];
             const myList = myCards.get(s.owner_user_id) ?? [];
             return (
-              <Card key={`${s.owner_user_id}`}>
+              <Card key={`${s.owner_user_id}`} className={
+                s.match_type === "MUTUAL"
+                  ? "border-l-[3px] border-l-green-400"
+                  : s.match_type === "DIRECT"
+                    ? "border-l-[3px] border-l-sky-400"
+                    : ""
+              }>
                 <CardHeader className="flex flex-row items-start justify-between gap-3">
                   <div>
                     <CardTitle>{s.owner_display_name}</CardTitle>
@@ -220,20 +229,18 @@ export default async function ComparePage() {
 function MatchBadge({ type }: { type: Summary["match_type"] }) {
   const styles =
     type === "MUTUAL"
-      ? "bg-green-100 text-green-800"
+      ? "bg-green-100 text-green-800 ring-1 ring-green-300 shadow-sm shadow-green-100"
       : type === "DIRECT"
-        ? "bg-brand-100 text-brand-800"
-        : "bg-slate-100 text-slate-700";
+        ? "bg-sky-100 text-sky-800 ring-1 ring-sky-200"
+        : "bg-slate-100 text-slate-600";
   const label =
     type === "MUTUAL"
-      ? "Mutua"
+      ? "⇄ Mutua"
       : type === "DIRECT"
-        ? "Directa"
+        ? "→ Directa"
         : "Solo tú das";
   return (
-    <span
-      className={`rounded-full px-2.5 py-1 text-xs font-medium ${styles}`}
-    >
+    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${styles}`}>
       {label}
     </span>
   );

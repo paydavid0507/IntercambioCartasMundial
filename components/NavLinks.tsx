@@ -23,7 +23,7 @@ export function NavLinks({ unreadMessages }: { unreadMessages: number }) {
             href={l.href}
             className={`relative rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
               active
-                ? "bg-slate-800 text-white"
+                ? "text-amber-400"
                 : "text-slate-400 hover:bg-slate-800/60 hover:text-white"
             }`}
           >
