@@ -50,8 +50,8 @@ async function updateProfile(formData: FormData) {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const profileUpdate: any = {
+  // notify_matches not yet in generated Supabase types — cast until types are regenerated
+  const profileUpdate: Record<string, unknown> = {
     display_name,
     city,
     country,
