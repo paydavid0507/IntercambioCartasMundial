@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useUnread } from "@/components/UnreadProvider";
 
 const links = [
   { href: "/album",    label: "Mi álbum" },
@@ -11,8 +12,9 @@ const links = [
   { href: "/profile",  label: "Perfil" },
 ];
 
-export function NavLinks({ unreadMessages }: { unreadMessages: number }) {
+export function NavLinks() {
   const pathname = usePathname();
+  const unread = useUnread();
   return (
     <nav className="hidden items-center gap-1 sm:flex">
       {links.map((l) => {
@@ -28,9 +30,9 @@ export function NavLinks({ unreadMessages }: { unreadMessages: number }) {
             }`}
           >
             {l.label}
-            {l.href === "/mensajes" && unreadMessages > 0 && (
+            {l.href === "/mensajes" && unread > 0 && (
               <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-bold text-slate-950">
-                {unreadMessages > 9 ? "9+" : unreadMessages}
+                {unread > 9 ? "9+" : unread}
               </span>
             )}
           </Link>

@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Navbar } from "@/components/Navbar";
 import { BottomNav } from "@/components/BottomNav";
+import { UnreadProvider } from "@/components/UnreadProvider";
 
 export default async function AppLayout({
   children,
@@ -32,12 +33,14 @@ export default async function AppLayout({
     profile?.display_name ?? user.email?.split("@")[0] ?? "Usuario";
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Navbar displayName={displayName} unreadMessages={unreadCount ?? 0} />
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 pb-20 sm:pb-6">
-        {children}
-      </main>
-      <BottomNav unreadMessages={unreadCount ?? 0} />
-    </div>
+    <UnreadProvider initialCount={unreadCount ?? 0} userId={user.id}>
+      <div className="flex min-h-screen flex-col">
+        <Navbar displayName={displayName} />
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 pb-20 sm:pb-6">
+          {children}
+        </main>
+        <BottomNav />
+      </div>
+    </UnreadProvider>
   );
 }

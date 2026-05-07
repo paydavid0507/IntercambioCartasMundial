@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpen, ArrowLeftRight, Search, Mail, User } from "lucide-react";
+import { useUnread } from "@/components/UnreadProvider";
 
 const items = [
   { href: "/album",    label: "Álbum",    icon: BookOpen },
@@ -12,8 +13,9 @@ const items = [
   { href: "/profile",  label: "Perfil",   icon: User },
 ];
 
-export function BottomNav({ unreadMessages }: { unreadMessages: number }) {
+export function BottomNav() {
   const pathname = usePathname();
+  const unreadMessages = useUnread();
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-800 bg-slate-950 sm:hidden">
