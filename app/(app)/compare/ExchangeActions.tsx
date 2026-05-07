@@ -51,7 +51,7 @@ export function ExchangeActions({
         {/* Ver perfil */}
         <Link
           href={`/u/${shareSlug}`}
-          className="inline-flex items-center gap-1.5 rounded-md bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-md bg-slate-100 px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-200 transition-colors"
         >
           <User className="h-4 w-4" />
           Perfil
@@ -63,7 +63,7 @@ export function ExchangeActions({
             href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-md bg-green-600 px-3 py-2.5 text-sm font-medium text-white hover:bg-green-700 transition-colors"
           >
             <WhatsAppIcon className="h-4 w-4" />
             WhatsApp
@@ -74,7 +74,7 @@ export function ExchangeActions({
         <button
           type="button"
           onClick={() => { setShowForm((v) => !v); setSent(false); setError(null); }}
-          className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+          className={`inline-flex items-center gap-1.5 rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
             showForm
               ? "bg-brand-100 text-brand-700 hover:bg-brand-200"
               : "bg-brand-600 text-white hover:bg-brand-700"
@@ -111,7 +111,7 @@ export function ExchangeActions({
                   <button
                     type="submit"
                     disabled={pending || !body.trim()}
-                    className="inline-flex items-center gap-1.5 rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-700 disabled:opacity-50 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-md bg-brand-600 px-3 py-2.5 text-sm font-medium text-white hover:bg-brand-700 disabled:opacity-50 transition-colors"
                   >
                     <Send className="h-3.5 w-3.5" />
                     {pending ? "Enviando..." : "Enviar"}

@@ -368,26 +368,33 @@ function EditPanel({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-3 border-t border-amber-200 bg-amber-50 px-3 py-2">
-      <span className="font-mono text-sm font-semibold text-slate-700">
-        {card.card_code}
-      </span>
+    <div className="border-t border-amber-200 bg-amber-50 px-3 py-3 space-y-2">
+      {/* Fila 1: código · cantidad · guardar */}
       <div className="flex items-center gap-2">
-        <label className="text-xs text-slate-500">Cantidad</label>
+        <span className="shrink-0 font-mono text-sm font-semibold text-slate-700">
+          {card.card_code}
+        </span>
         <Input
           type="number"
           min={1}
           value={qty}
           onChange={(e) => setQty(Number(e.target.value))}
-          className="h-7 w-20 text-sm"
+          aria-label="Cantidad"
+          className="h-9 w-20 text-sm"
         />
-      </div>
-      {error && <span className="text-sm text-red-600">{error}</span>}
-      <div className="flex items-center gap-2">
-        <Button size="sm" onClick={onSave} disabled={pending}>
+        <Button size="sm" onClick={onSave} disabled={pending} className="shrink-0">
           <Check className="mr-1 h-3.5 w-3.5" />
           {pending ? "..." : "Guardar"}
         </Button>
+        {/* Cancelar como icono en móvil, con texto en desktop */}
+        <Button size="sm" variant="ghost" onClick={onClose} disabled={pending} className="ml-auto shrink-0">
+          <X className="h-3.5 w-3.5" />
+          <span className="ml-1 hidden sm:inline">Cancelar</span>
+        </Button>
+      </div>
+
+      {/* Fila 2: eliminar + error opcional */}
+      <div className="flex items-center gap-2">
         {confirmDelete ? (
           <div className="flex items-center gap-1.5 rounded-md bg-red-50 px-2 py-1 ring-1 ring-red-200">
             <span className="text-xs font-medium text-red-700">¿Eliminar?</span>
@@ -406,10 +413,7 @@ function EditPanel({
             Eliminar
           </Button>
         )}
-        <Button size="sm" variant="ghost" onClick={onClose} disabled={pending}>
-          <X className="mr-1 h-3.5 w-3.5" />
-          Cancelar
-        </Button>
+        {error && <span className="text-xs text-red-600">{error}</span>}
       </div>
     </div>
   );
