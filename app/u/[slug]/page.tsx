@@ -30,10 +30,23 @@ export async function generateMetadata({
   };
 }
 
+// Supabase JS cannot infer nested join shapes from the select string, so we
+// define the expected row shapes explicitly and cast once via these helpers.
 type CardJoin = {
   card_id: string;
   cards: { card_code: string } | null;
 };
+
+type NeedsRow = CardJoin & { quantity_needed: number };
+type DupsRow = CardJoin & { quantity_available: number };
+
+function asNeedsRows(data: unknown): NeedsRow[] {
+  return (data ?? []) as NeedsRow[];
+}
+
+function asDupsRows(data: unknown): DupsRow[] {
+  return (data ?? []) as DupsRow[];
+}
 
 export default async function PublicProfilePage({
   params,
@@ -64,16 +77,12 @@ export default async function PublicProfilePage({
       .eq("user_id", profile.id),
   ]);
 
-  const needs = ((needsData ?? []) as unknown as Array<
-    CardJoin & { quantity_needed: number }
-  >)
+  const needs = asNeedsRows(needsData)
     .filter((r) => r.cards)
     .map((r) => ({ code: r.cards!.card_code, qty: r.quantity_needed }))
     .sort((a, b) => a.code.localeCompare(b.code));
 
-  const duplicates = ((dupsData ?? []) as unknown as Array<
-    CardJoin & { quantity_available: number }
-  >)
+  const duplicates = asDupsRows(dupsData)
     .filter((r) => r.cards)
     .map((r) => ({ code: r.cards!.card_code, qty: r.quantity_available }))
     .sort((a, b) => a.code.localeCompare(b.code));

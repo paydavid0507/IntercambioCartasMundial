@@ -25,6 +25,40 @@ type CardOwnerResult = {
   quantity: number;
 };
 
+// Supabase JS cannot infer nested join shapes from the select string, so we
+// define the raw row shapes and cast once via these helpers.
+type DupJoinRow = {
+  card_id: string;
+  user_id: string;
+  quantity_available: number;
+  profiles: {
+    display_name: string;
+    city: string | null;
+    country: string | null;
+    share_slug: string;
+  } | null;
+};
+
+type NeedJoinRow = {
+  card_id: string;
+  user_id: string;
+  quantity_needed: number;
+  profiles: {
+    display_name: string;
+    city: string | null;
+    country: string | null;
+    share_slug: string;
+  } | null;
+};
+
+function asDupJoinRows(data: unknown): DupJoinRow[] {
+  return (data ?? []) as DupJoinRow[];
+}
+
+function asNeedJoinRows(data: unknown): NeedJoinRow[] {
+  return (data ?? []) as NeedJoinRow[];
+}
+
 export function SearchClient({ currentUserId }: { currentUserId: string }) {
   const [query, setQuery] = React.useState("");
   const [debounced, setDebounced] = React.useState("");
@@ -111,17 +145,7 @@ export function SearchClient({ currentUserId }: { currentUserId: string }) {
               .limit(50),
           ]);
 
-          const fromDups: CardOwnerResult[] = ((dups ?? []) as unknown as Array<{
-            card_id: string;
-            user_id: string;
-            quantity_available: number;
-            profiles: {
-              display_name: string;
-              city: string | null;
-              country: string | null;
-              share_slug: string;
-            } | null;
-          }>)
+          const fromDups: CardOwnerResult[] = asDupJoinRows(dups)
             .filter((r) => r.profiles)
             .map((r) => ({
               card_code: cardIdToCode.get(r.card_id) ?? "",
@@ -134,17 +158,7 @@ export function SearchClient({ currentUserId }: { currentUserId: string }) {
               quantity: r.quantity_available,
             }));
 
-          const fromNeeds: CardOwnerResult[] = ((needs ?? []) as unknown as Array<{
-            card_id: string;
-            user_id: string;
-            quantity_needed: number;
-            profiles: {
-              display_name: string;
-              city: string | null;
-              country: string | null;
-              share_slug: string;
-            } | null;
-          }>)
+          const fromNeeds: CardOwnerResult[] = asNeedJoinRows(needs)
             .filter((r) => r.profiles)
             .map((r) => ({
               card_code: cardIdToCode.get(r.card_id) ?? "",

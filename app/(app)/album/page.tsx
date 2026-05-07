@@ -5,6 +5,8 @@ import { CardForm } from "@/components/CardForm";
 import { CardList, type CardRow } from "@/components/CardList";
 import { QuickPaste } from "@/components/QuickPaste";
 
+// Supabase JS cannot infer nested join shapes from the select string, so we
+// define the expected row shapes explicitly and cast once via these helpers.
 type NeedsRow = {
   card_id: string;
   quantity_needed: number;
@@ -16,6 +18,14 @@ type DupRow = {
   quantity_available: number;
   cards: { card_code: string; team_abbr: string; card_number: number } | null;
 };
+
+function asNeedsRows(data: unknown): NeedsRow[] {
+  return (data ?? []) as NeedsRow[];
+}
+
+function asDupRows(data: unknown): DupRow[] {
+  return (data ?? []) as DupRow[];
+}
 
 export default async function AlbumPage() {
   const supabase = createClient();
@@ -37,7 +47,7 @@ export default async function AlbumPage() {
       .order("card_id"),
   ]);
 
-  const needs: CardRow[] = ((needsData ?? []) as unknown as NeedsRow[])
+  const needs: CardRow[] = asNeedsRows(needsData)
     .filter((r) => r.cards !== null)
     .map((r) => ({
       card_id: r.card_id,
@@ -48,7 +58,7 @@ export default async function AlbumPage() {
     }))
     .sort((a, b) => a.card_code.localeCompare(b.card_code));
 
-  const duplicates: CardRow[] = ((dupsData ?? []) as unknown as DupRow[])
+  const duplicates: CardRow[] = asDupRows(dupsData)
     .filter((r) => r.cards !== null)
     .map((r) => ({
       card_id: r.card_id,
