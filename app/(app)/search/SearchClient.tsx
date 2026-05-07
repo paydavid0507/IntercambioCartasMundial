@@ -121,7 +121,7 @@ export function SearchClient({ currentUserId }: { currentUserId: string }) {
 
         const { data: cards } = await cardsQ.limit(50);
         const cardIdToCode = new Map<string, string>(
-          (cards ?? []).map((c) => [c.id, c.card_code]),
+          (cards ?? []).filter((c) => c.card_code !== null).map((c) => [c.id, c.card_code!]),
         );
         const cardIds = Array.from(cardIdToCode.keys());
 
