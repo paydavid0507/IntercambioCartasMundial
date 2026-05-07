@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { slugify } from "@/lib/utils";
+import type { Database } from "@/types/database";
+
+type ProfileUpdate = Database["public"]["Tables"]["profiles"]["Update"];
 
 async function updateProfile(formData: FormData) {
   "use server";
@@ -50,7 +53,7 @@ async function updateProfile(formData: FormData) {
     );
   }
 
-  const profileUpdate: any = {
+  const profileUpdate: ProfileUpdate = {
     display_name,
     city,
     country,
@@ -75,6 +78,15 @@ async function updateProfile(formData: FormData) {
   );
 }
 
+function getSiteOrigin(): string {
+  // Explicit override (set in Vercel production environment).
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  // Vercel automatically sets VERCEL_URL on preview deployments (no protocol prefix).
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  // Local development fallback.
+  return "http://localhost:3000";
+}
+
 export default async function ProfilePage({
   searchParams,
 }: {
@@ -92,7 +104,7 @@ export default async function ProfilePage({
     .eq("id", user.id)
     .maybeSingle();
 
-  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? "https://intercambio-cartas-mundial.vercel.app";
+  const origin = getSiteOrigin();
   const publicUrl = profile ? `${origin}/u/${profile.share_slug}` : "";
 
   return (
@@ -179,7 +191,7 @@ export default async function ProfilePage({
           <input
             type="checkbox"
             name="notify_matches"
-            defaultChecked={(profile as { notify_matches?: boolean })?.notify_matches ?? false}
+            defaultChecked={profile?.notify_matches ?? false}
             className="mt-1 h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500"
           />
           <span>

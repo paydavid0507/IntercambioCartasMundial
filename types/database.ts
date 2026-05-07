@@ -21,6 +21,7 @@ export interface Database {
           country: string | null;
           whatsapp: string | null;
           show_contact: boolean;
+          notify_matches: boolean;
           share_slug: string;
           created_at: string;
           updated_at: string;
@@ -32,6 +33,7 @@ export interface Database {
           country?: string | null;
           whatsapp?: string | null;
           show_contact?: boolean;
+          notify_matches?: boolean;
           share_slug: string;
         };
         Update: {
@@ -40,6 +42,7 @@ export interface Database {
           country?: string | null;
           whatsapp?: string | null;
           show_contact?: boolean;
+          notify_matches?: boolean;
           share_slug?: string;
         };
         Relationships: [];
