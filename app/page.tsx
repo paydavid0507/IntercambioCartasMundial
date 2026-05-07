@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { ArrowRight, LogIn, BookmarkPlus, Copy, Shuffle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
@@ -162,7 +163,7 @@ export default async function Landing() {
           <Link href="/privacidad" className="hover:text-slate-600 underline underline-offset-2 transition-colors">
             Privacidad
           </Link>
-          <img src="/avatar.png" alt="" className="h-3.5 w-3.5 rounded-full object-cover" />
+          <Image src="/avatar.png" alt="" width={14} height={14} className="rounded-full object-cover" />
         </div>
       </footer>
     </main>

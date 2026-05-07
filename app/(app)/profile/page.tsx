@@ -50,8 +50,7 @@ async function updateProfile(formData: FormData) {
     );
   }
 
-  // notify_matches not yet in generated Supabase types — cast until types are regenerated
-  const profileUpdate: Record<string, unknown> = {
+  const profileUpdate: any = {
     display_name,
     city,
     country,
