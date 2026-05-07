@@ -57,7 +57,21 @@ export function UnreadProvider({
       }, refetch)
       .subscribe();
 
-    return () => { supabase.removeChannel(channel); };
+    // Resync badge count when the tab becomes visible again or the browser
+    // comes back online — the WebSocket may have missed events while away.
+    const handleVisibility = () => {
+      if (!document.hidden) refetch();
+    };
+    const handleOnline = () => refetch();
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    window.addEventListener("online", handleOnline);
+
+    return () => {
+      supabase.removeChannel(channel);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener("online", handleOnline);
+    };
   }, [userId]);
 
   return (

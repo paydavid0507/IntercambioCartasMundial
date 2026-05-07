@@ -10,6 +10,13 @@ import type { Database } from "@/types/database";
 
 type ProfileUpdate = Database["public"]["Tables"]["profiles"]["Update"];
 
+/** Normalize a WhatsApp input to digits only, or return null if empty/invalid. */
+function normalizeWhatsapp(raw: string): string | null {
+  const digits = raw.replace(/[^0-9]/g, "");
+  if (digits.length < 7) return null; // too short to be a real number
+  return digits;
+}
+
 async function updateProfile(formData: FormData) {
   "use server";
 
@@ -22,7 +29,8 @@ async function updateProfile(formData: FormData) {
   const display_name = String(formData.get("display_name") ?? "").trim();
   const city = String(formData.get("city") ?? "").trim() || null;
   const country = String(formData.get("country") ?? "").trim() || null;
-  const whatsapp = String(formData.get("whatsapp") ?? "").trim() || null;
+  const whatsappRaw = String(formData.get("whatsapp") ?? "").trim();
+  const whatsapp = whatsappRaw ? normalizeWhatsapp(whatsappRaw) : null;
   const show_contact = formData.get("show_contact") === "on";
   const notify_matches = formData.get("notify_matches") === "on";
   const slugInput = String(formData.get("share_slug") ?? "").trim();
@@ -36,6 +44,12 @@ async function updateProfile(formData: FormData) {
   if (!share_slug) {
     return redirect(
       "/profile?error=" + encodeURIComponent("El slug no puede quedar vacío"),
+    );
+  }
+  if (whatsappRaw && whatsapp === null) {
+    return redirect(
+      "/profile?error=" +
+        encodeURIComponent("El número de WhatsApp no es válido (mínimo 7 dígitos)"),
     );
   }
 
@@ -109,11 +123,11 @@ export default async function ProfilePage({
 
   return (
     <div className="space-y-6">
-      <header className="flex items-start gap-3">
-        <span className="mt-2 h-7 w-[3px] flex-shrink-0 rounded-full bg-amber-400" />
+      <header className="page-header">
+        <span className="page-header-bar" />
         <div>
-          <h1 className="font-display text-4xl tracking-wide text-slate-900">MI PERFIL</h1>
-          <p className="text-sm text-slate-500">Esta información se usa para que otros usuarios puedan contactarte.</p>
+          <h1 className="page-title">MI PERFIL</h1>
+          <p className="page-subtitle">Esta información se usa para que otros usuarios puedan contactarte.</p>
         </div>
       </header>
 

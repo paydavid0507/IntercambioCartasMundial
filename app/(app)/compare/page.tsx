@@ -160,11 +160,11 @@ export default async function ComparePage() {
 
   return (
     <div className="space-y-6">
-      <header className="flex items-start gap-3">
-        <span className="mt-2 h-7 w-[3px] flex-shrink-0 rounded-full bg-amber-400" />
+      <header className="page-header">
+        <span className="page-header-bar" />
         <div>
-          <h1 className="font-display text-4xl tracking-wide text-slate-900">INTERCAMBIOS</h1>
-          <p className="text-sm text-slate-500">Mutuas primero, luego directas, al final solo tú das.</p>
+          <h1 className="page-title">INTERCAMBIOS</h1>
+          <p className="page-subtitle">Mutuas primero, luego directas, al final solo tú das.</p>
         </div>
       </header>
 
@@ -245,4 +245,3 @@ function MatchBadge({ type }: { type: Summary["match_type"] }) {
     </span>
   );
 }
-

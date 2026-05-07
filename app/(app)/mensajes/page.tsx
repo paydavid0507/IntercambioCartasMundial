@@ -74,10 +74,10 @@ export default async function InboxPage() {
 
   return (
     <div className="space-y-6">
-      <header className="flex items-start gap-3">
-        <span className="mt-2 h-7 w-[3px] flex-shrink-0 rounded-full bg-amber-400" />
+      <header className="page-header">
+        <span className="page-header-bar" />
         <div>
-          <h1 className="flex items-center gap-3 font-display text-4xl tracking-wide text-slate-900">
+          <h1 className="page-title flex items-center gap-3">
             MENSAJES
             {unread > 0 && (
               <span className="rounded-full bg-amber-500 px-2.5 py-0.5 font-sans text-sm font-bold text-slate-950">
@@ -85,7 +85,7 @@ export default async function InboxPage() {
               </span>
             )}
           </h1>
-          <p className="text-sm text-slate-500">Máximo 10 mensajes por bandeja.</p>
+          <p className="page-subtitle">Máximo 10 mensajes por bandeja.</p>
         </div>
       </header>
 

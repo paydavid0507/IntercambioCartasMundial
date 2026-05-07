@@ -11,14 +11,22 @@ type CardKind = "needed" | "duplicate";
  *
  * One inbox message per matched user, summarising the total card count.
  * If the actor has a public WhatsApp, a wa.me link is included in the body.
+ *
+ * The actor's identity is derived from the authenticated session on the
+ * supplied Supabase client — no actorId parameter is accepted to prevent
+ * accidental misuse with a spoofed ID.
  */
 export async function notifyMatchedUsers(
-  actorId: string,
   newCardIds: string[],
   kind: CardKind,
   supabase: SupabaseClient,
 ): Promise<void> {
   if (newCardIds.length === 0) return;
+
+  // Derive actor from the authenticated session — never from a caller-supplied ID.
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+  const actorId = user.id;
 
   // Actor's public profile
   const { data: actor } = await supabase

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\david\\\\Documents\\\\Claude\\\\Projects\\\\IntercambioCartasMundial\" -Recurse -Force)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Sort-Object FullName)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(npx tsc *)",
+      "Bash(npx next *)",
+      "Bash(git commit -m 'fix: remove invalid eslint-disable comment causing Vercel build failure *)",
+      "Bash(git commit -m 'fix: resolve build failures — Image component and any cast without eslint comments *)",
+      "Bash(git commit -m 'fix: add error logging to notifications to expose silent failures *)",
+      "Bash(npx supabase *)"
+    ]
+  }
+}

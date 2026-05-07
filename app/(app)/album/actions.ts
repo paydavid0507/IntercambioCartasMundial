@@ -92,7 +92,7 @@ export async function upsertCard(
   }
 
   if (isNew) {
-    await notifyMatchedUsers(user.id, [card.id], kind, supabase);
+    await notifyMatchedUsers([card.id], kind, supabase);
   }
 
   revalidatePath("/album");
@@ -306,7 +306,7 @@ export async function bulkUpsertFromText(
 
   if (added > 0) {
     const newCardIds = cardIds.filter((id) => !existingSet.has(id));
-    await notifyMatchedUsers(user.id, newCardIds, kind, supabase);
+    await notifyMatchedUsers(newCardIds, kind, supabase);
   }
 
   revalidatePath("/album");
