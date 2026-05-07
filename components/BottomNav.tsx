@@ -29,9 +29,13 @@ export function BottomNav({ unreadMessages }: { unreadMessages: number }) {
               }`}
             >
               <div className="relative">
-                <Icon className="h-5 w-5" />
+                {/* Ping ring — solo en mensajes con no leídos */}
                 {href === "/mensajes" && unreadMessages > 0 && (
-                  <span className="absolute -right-1.5 -top-1.5 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-amber-500 px-0.5 text-[8px] font-bold text-slate-950 leading-none">
+                  <span className="absolute -inset-1.5 rounded-full bg-amber-400/50 animate-ping pointer-events-none" />
+                )}
+                <Icon className={`relative h-5 w-5 ${href === "/mensajes" && unreadMessages > 0 ? "text-amber-400" : ""}`} />
+                {href === "/mensajes" && unreadMessages > 0 && (
+                  <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-amber-500 px-0.5 text-[9px] font-bold text-slate-950 leading-none shadow-sm shadow-amber-900/30">
                     {unreadMessages > 9 ? "9+" : unreadMessages}
                   </span>
                 )}

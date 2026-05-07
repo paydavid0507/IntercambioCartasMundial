@@ -383,8 +383,8 @@ function EditPanel({
           className="h-9 w-20 text-sm"
         />
         <Button size="sm" onClick={onSave} disabled={pending} className="shrink-0">
-          <Check className="mr-1 h-3.5 w-3.5" />
-          {pending ? "..." : "Guardar"}
+          <Check className="h-3.5 w-3.5 sm:mr-1" />
+          <span className="hidden sm:inline">{pending ? "..." : "Guardar"}</span>
         </Button>
         {/* Cancelar como icono en móvil, con texto en desktop */}
         <Button size="sm" variant="ghost" onClick={onClose} disabled={pending} className="ml-auto shrink-0">
@@ -409,8 +409,8 @@ function EditPanel({
           </div>
         ) : (
           <Button size="sm" variant="danger" onClick={() => setConfirmDelete(true)} disabled={pending}>
-            <Trash2 className="mr-1 h-3.5 w-3.5" />
-            Eliminar
+            <Trash2 className="h-3.5 w-3.5 sm:mr-1" />
+            <span className="hidden sm:inline">Eliminar</span>
           </Button>
         )}
         {error && <span className="text-xs text-red-600">{error}</span>}

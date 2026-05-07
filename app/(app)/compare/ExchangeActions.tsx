@@ -47,14 +47,21 @@ export function ExchangeActions({
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap items-center gap-2">
-        {/* Ver perfil */}
+      {/* Móvil: íconos en columna con caption · Desktop: botones con texto */}
+      <div className="flex items-start gap-5 sm:flex-wrap sm:items-center sm:gap-2">
+
+        {/* Perfil */}
         <Link
           href={`/u/${shareSlug}`}
-          className="inline-flex items-center gap-1.5 rounded-md bg-slate-100 px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-200 transition-colors"
+          className="flex flex-col items-center gap-1 sm:inline-flex sm:flex-row sm:items-center sm:gap-1.5 sm:rounded-md sm:bg-slate-100 sm:px-3 sm:py-2.5 sm:text-sm sm:font-medium sm:text-slate-700 sm:hover:bg-slate-200 sm:transition-colors"
         >
-          <User className="h-4 w-4" />
-          Perfil
+          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 transition-colors hover:bg-slate-200 sm:hidden">
+            <User className="h-5 w-5 text-slate-600" />
+          </span>
+          <User className="hidden h-4 w-4 sm:block" />
+          <span className="text-[10px] font-medium tracking-wide text-slate-500 sm:text-sm sm:font-medium sm:text-slate-700 sm:tracking-normal">
+            Perfil
+          </span>
         </Link>
 
         {/* WhatsApp */}
@@ -63,10 +70,15 @@ export function ExchangeActions({
             href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md bg-green-600 px-3 py-2.5 text-sm font-medium text-white hover:bg-green-700 transition-colors"
+            className="flex flex-col items-center gap-1 sm:inline-flex sm:flex-row sm:items-center sm:gap-1.5 sm:rounded-md sm:bg-green-600 sm:px-3 sm:py-2.5 sm:text-sm sm:font-medium sm:text-white sm:hover:bg-green-700 sm:transition-colors"
           >
-            <WhatsAppIcon className="h-4 w-4" />
-            WhatsApp
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-green-500 transition-colors hover:bg-green-600 sm:hidden">
+              <WhatsAppIcon className="h-5 w-5 text-white" />
+            </span>
+            <WhatsAppIcon className="hidden h-4 w-4 sm:block" />
+            <span className="text-[10px] font-medium tracking-wide text-green-700 sm:text-sm sm:font-medium sm:text-white sm:tracking-normal">
+              WhatsApp
+            </span>
           </a>
         )}
 
@@ -74,14 +86,27 @@ export function ExchangeActions({
         <button
           type="button"
           onClick={() => { setShowForm((v) => !v); setSent(false); setError(null); }}
-          className={`inline-flex items-center gap-1.5 rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
+          className={`flex flex-col items-center gap-1 sm:inline-flex sm:flex-row sm:items-center sm:gap-1.5 sm:rounded-md sm:px-3 sm:py-2.5 sm:text-sm sm:font-medium sm:transition-colors ${
             showForm
-              ? "bg-brand-100 text-brand-700 hover:bg-brand-200"
-              : "bg-brand-600 text-white hover:bg-brand-700"
+              ? "sm:bg-brand-100 sm:text-brand-700 sm:hover:bg-brand-200"
+              : "sm:bg-brand-600 sm:text-white sm:hover:bg-brand-700"
           }`}
         >
-          {showForm ? <X className="h-4 w-4" /> : <MessageCircle className="h-4 w-4" />}
-          {showForm ? "Cancelar" : "Mensaje"}
+          <span className={`flex h-11 w-11 items-center justify-center rounded-full transition-colors sm:hidden ${
+            showForm ? "bg-brand-100 hover:bg-brand-200" : "bg-brand-600 hover:bg-brand-700"
+          }`}>
+            {showForm
+              ? <X className="h-5 w-5 text-brand-700" />
+              : <MessageCircle className="h-5 w-5 text-white" />}
+          </span>
+          {showForm
+            ? <X className="hidden h-4 w-4 sm:block" />
+            : <MessageCircle className="hidden h-4 w-4 sm:block" />}
+          <span className={`text-[10px] font-medium tracking-wide sm:text-sm sm:font-medium sm:tracking-normal ${
+            showForm ? "text-brand-700" : "text-brand-600 sm:text-white"
+          }`}>
+            {showForm ? "Cerrar" : "Mensaje"}
+          </span>
         </button>
       </div>
 
