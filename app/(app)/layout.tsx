@@ -34,11 +34,13 @@ export default async function AppLayout({
 
   return (
     <UnreadProvider initialCount={unreadCount ?? 0} userId={user.id}>
-      <div className="flex min-h-screen flex-col">
+      <div className="flex h-dvh flex-col overflow-hidden">
         <Navbar displayName={displayName} />
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 pb-20 sm:pb-6">
-          {children}
-        </main>
+        <div className="flex-1 overflow-y-auto">
+          <main className="mx-auto w-full max-w-5xl px-4 py-6 pb-20 sm:pb-6">
+            {children}
+          </main>
+        </div>
         <BottomNav />
       </div>
     </UnreadProvider>
