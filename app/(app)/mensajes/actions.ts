@@ -16,6 +16,17 @@ export async function sendMessage(
   if (!trimmed) return { ok: false, error: "El mensaje no puede estar vacío." };
   if (trimmed.length > 1000) return { ok: false, error: "Máximo 1000 caracteres." };
 
+  // Rate limit: max 10 messages sent per hour
+  const oneHourAgo = new Date(Date.now() - 3_600_000).toISOString();
+  const { count: recentCount } = await supabase
+    .from("messages")
+    .select("id", { count: "exact", head: true })
+    .eq("sender_id", user.id)
+    .gte("created_at", oneHourAgo);
+  if ((recentCount ?? 0) >= 10) {
+    return { ok: false, error: "Límite alcanzado. Puedes enviar hasta 10 mensajes por hora." };
+  }
+
   const { error } = await supabase.from("messages").insert({
     sender_id: user.id,
     recipient_id: recipientId,
