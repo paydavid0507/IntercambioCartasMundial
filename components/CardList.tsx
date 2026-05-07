@@ -149,10 +149,13 @@ export function CardList({ kind, rows }: { kind: CardKind; rows: CardRow[] }) {
               disabled={bulkPending}
               onClick={onBulkDelete}
             >
-              <Trash2 className="mr-1.5 h-3.5 w-3.5" />
-              {bulkPending
-                ? "Eliminando..."
-                : `Eliminar (${selected.size})`}
+              <Trash2 className="h-3.5 w-3.5 sm:mr-1.5" />
+              <span className="hidden sm:inline">
+                {bulkPending ? "Eliminando..." : `Eliminar (${selected.size})`}
+              </span>
+              <span className="sm:hidden ml-1">
+                {bulkPending ? "..." : `(${selected.size})`}
+              </span>
             </Button>
           </div>
         )}

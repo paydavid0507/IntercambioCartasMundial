@@ -136,8 +136,8 @@ export function InboxClient({
                     onClick={() => setExpanded(new Set())}
                     className="inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs text-slate-500 hover:bg-slate-200 transition-colors"
                   >
-                    <ChevronsDownUp className="h-3.5 w-3.5" />
-                    Colapsar
+                    <ChevronsDownUp className="h-3.5 w-3.5 sm:mr-0.5" />
+                    <span className="hidden sm:inline">Colapsar</span>
                   </button>
                 ) : !allExpanded && (
                   <button
@@ -145,8 +145,8 @@ export function InboxClient({
                     onClick={expandAll}
                     className="inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs text-slate-500 hover:bg-slate-200 transition-colors"
                   >
-                    <ChevronsUpDown className="h-3.5 w-3.5" />
-                    Expandir
+                    <ChevronsUpDown className="h-3.5 w-3.5 sm:mr-0.5" />
+                    <span className="hidden sm:inline">Expandir</span>
                   </button>
                 )}
 
@@ -178,8 +178,8 @@ export function InboxClient({
                     onClick={() => setConfirmClear(true)}
                     className="inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors"
                   >
-                    <Trash2 className="h-3.5 w-3.5" />
-                    Vaciar
+                    <Trash2 className="h-3.5 w-3.5 sm:mr-0.5" />
+                    <span className="hidden sm:inline">Vaciar</span>
                   </button>
                 )}
               </>
