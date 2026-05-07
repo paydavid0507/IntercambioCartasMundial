@@ -50,11 +50,16 @@ export async function notifyMatchedUsers(
   const candidateIds = Array.from(countByUser.keys());
 
   // Filter to users who have notifications enabled
-  const { data: notifiableProfiles } = await supabase
+  const { data: notifiableProfiles, error: profilesError } = await supabase
     .from("profiles")
     .select("id")
     .in("id", candidateIds)
     .eq("notify_matches", true);
+
+  if (profilesError) {
+    console.error("[notifications] Error fetching notifiable profiles:", profilesError.message);
+    return;
+  }
 
   if (!notifiableProfiles || notifiableProfiles.length === 0) return;
 
@@ -79,5 +84,8 @@ export async function notifyMatchedUsers(
     };
   });
 
-  await supabase.from("messages").insert(messages);
+  const { error: insertError } = await supabase.from("messages").insert(messages);
+  if (insertError) {
+    console.error("[notifications] Error inserting messages:", insertError.message);
+  }
 }
